@@ -1,0 +1,7 @@
+---
+nfsmount: /home
+nfsserver: "{{ hostvars[groups['master'][0]]['ansible_eth1']['ipv4']['address'] }}"
+nfspath: /export
+nfsopts: "auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800"
+
+clusteruser: 'clusteruser'

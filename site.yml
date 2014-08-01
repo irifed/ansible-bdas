@@ -1,0 +1,25 @@
+---
+# first playbook
+
+#- name: gather facts for all hosts
+#  hosts: all
+
+- name: apply common configuration to all nodes
+  hosts: all
+  roles:
+    - common
+
+- name: setup nfs master
+  hosts: master
+  roles: 
+    - nfs-server
+
+- name: setup nfs clients
+  hosts: workers
+  roles: 
+    - nfs-client
+
+- name: setup mpi cluster
+  hosts: all
+  roles:
+    - openmpi
