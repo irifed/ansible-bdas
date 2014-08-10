@@ -1,5 +1,5 @@
 ---
-- name: install some tools
+- name: install some tools for convenience
   apt: name={{ item }} state=installed
   with_items:
     - vim
@@ -10,23 +10,5 @@
     - build-essential
 
 - name: populate /etc/hosts
-  template: src=hosts dest=/etc/hosts
-
-- name: create cluster user
-  user: name={{ clusteruser }} generate_ssh_key=yes ssh_key_bits=2048
-
-- name: setup passwordless ssh
-  # hack: allow passwordless on same host and rely on nfs sharing /home
-  command: /bin/cp /home/{{ clusteruser }}/.ssh/id_rsa.pub  /home/{{ clusteruser }}/.ssh/authorized_keys
-
-- name: disable strict host checking for cluster user
-  copy: src=sshconfig dest=/home/{{ clusteruser }}/.ssh/config
-
-- name: add cluster user to sudoers
-  lineinfile: "dest=/etc/sudoers
-  insertafter=EOF
-  line='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
-  regexp='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
-  state=present"
-
+  template: src=etc/hosts.j2 dest=/etc/hosts
 

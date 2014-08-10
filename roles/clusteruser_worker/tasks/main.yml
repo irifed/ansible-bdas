@@ -1,0 +1,11 @@
+---
+- name: put fetched SSH key to all other hosts
+  copy: src=sshkeys/{{ item }} dest=/home/{{ clusteruser }}/.ssh/{{ item }}
+  with_items:
+    - id_rsa
+    - id_rsa.pub
+    - authorized_keys
+
+- name: cleanup sshkeys
+  local_action: command rm -rf sshkeys
+  

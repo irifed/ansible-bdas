@@ -1,0 +1,15 @@
+---
+- name: Add Cloudera repository key
+  apt_key: url=http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh/archive.key state=present
+
+- name: Install Cloudera repository
+  apt_repository: repo='deb [arch=amd64] http://archive.cloudera.com/cdh5/ubuntu/precise/amd64/cdh precise-cdh5 contrib' state=present
+
+- name: Install OpenJDK package
+  apt:  name=openjdk-7-jdk state=installed
+
+- name: Create a directory for java 
+  file: state=directory path=/usr/java/
+
+- name: Create a link for java
+  file: src=/usr/lib/jvm/java-7-openjdk-amd64/jre state=link path=/usr/java/default

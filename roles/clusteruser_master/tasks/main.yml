@@ -1,0 +1,11 @@
+---
+- name: create tmp dir for ssh keys
+  local_action: command mkdir sshkeys
+  ignore_errors: yes
+
+- name: fetch SSH key file from master
+  fetch: src=/home/{{ clusteruser }}/.ssh/{{ item }} dest=sshkeys/{{ item }} flat=yes
+  with_items:
+    - id_rsa
+    - id_rsa.pub
+    - authorized_keys

@@ -1,0 +1,25 @@
+---
+# Playbook for  Hadoop slave servers
+
+- name: Install the datanode package
+  apt: name={{ item }} state=installed
+  with_items: 
+   - hadoop-hdfs-datanode
+
+- name: Copy the hadoop configuration files
+  template: src=roles/common/templates/hadoop_conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
+  with_items: 
+   - core-site.xml
+   - hdfs-site.xml
+   - slaves
+  notify: restart hadoop slave services
+
+- name: Create the data directory for the slave nodes to store the data
+  file: path={{ item }} owner=hdfs group=hdfs state=directory
+  with_items: hadoop.dfs_datanode_data_dir
+
+- name: start hadoop slave services
+  service: name={{ item }} state=started
+  with_items:
+    - hadoop-hdfs-datanode
+  

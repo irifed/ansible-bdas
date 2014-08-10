@@ -7,4 +7,4 @@
     - libopenmpi-dev
 
 - name: populate mpi_hosts
-  template: src=mpi_hosts dest=/etc/openmpi/openmpi-default-hostfile
+  template: src=etc/mpi_hosts.j2 dest=/etc/openmpi/openmpi-default-hostfile

@@ -1,25 +1,62 @@
 ---
-# first playbook
-
-#- name: gather facts for all hosts
-#  hosts: all
 
 - name: apply common configuration to all nodes
   hosts: all
   roles:
     - common
 
+- name: create {{ clusteruser }} user
+  hosts: all
+  roles:
+    - clusteruser_common
+
+- name: fetch SSH key file from master
+  hosts: master
+  roles: 
+    - clusteruser_master
+
+- name: put fetched SSH key to all other hosts
+  hosts: workers
+  roles:
+    - clusteruser_worker
+
 - name: setup nfs master
   hosts: master
   roles: 
-    - nfs-server
+    - nfs_server
 
 - name: setup nfs clients
   hosts: workers
   roles: 
-    - nfs-client
+    - nfs_client
 
 - name: setup mpi cluster
   hosts: all
   roles:
     - openmpi
+
+- name: prepare for Hadoop installation
+  hosts: all
+  roles:
+    - hadoop_common
+
+- name: setup HDFS namenode
+  hosts: master
+  roles:
+    - hdfs_namenode
+
+- name: setup HDFS datanodes
+  hosts: workers
+  roles:
+    - hdfs_datanode
+
+- name: deploy Spark
+  hosts: all
+  roles:
+    - spark_common
+
+- name: configure Spark master
+  hosts: master
+  roles:
+    - spark_master
+

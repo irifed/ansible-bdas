@@ -9,5 +9,5 @@
 # /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
 
 {% for host in groups['workers'] %}
-/export     {{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}(rw,sync,no_subtree_check)
+/export     {{ hostvars[host]['ansible_' + iface]['ipv4']['address'] }}(rw,sync,no_subtree_check)
 {% endfor %}

@@ -1,0 +1,9 @@
+---
+- name: Download Spark pre-built package
+  get_url: url={{ spark['spark_download_url'] }} dest="/tmp/spark.tgz"
+
+- name: Extract Spark archive
+  unarchive: copy=no src="/tmp/spark.tgz" dest=/opt/
+
+- name: Rename Spark directory
+  shell: chdir=/opt ln -s /opt/spark* spark

@@ -8,13 +8,13 @@
     - nfs-kernel-server
 
 - name: ensure /export mount line is present in /etc/fstab
-  mount: name=/export src=/home fstype=none opts=bind state=present
+  mount: name={{ nfspath }} src={{ nfsshare }} fstype=none opts=bind state=present
 
 - name: actually bind /home to /export folder
-  mount: name=/export src=/home fstype=none opts=bind state=mounted
+  mount: name={{ nfspath }} src={{ nfsshare}} fstype=none opts=bind state=mounted
 
 - name: allow access to exported NFS share for other hosts
-  template: src=exports dest=/etc/exports
+  template: src=etc/exports.j2 dest=/etc/exports
   notify:
     - reload exports
     - restart nfs-kernel-server

@@ -1,0 +1,5 @@
+---
+# Handlers for the hadoop master services
+
+- name: restart hadoop master services
+  service: name=hadoop-hdfs-namenode state=restarted
