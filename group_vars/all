@@ -1,13 +1,17 @@
-#conf
+# Variables for all hosts
 
 iface: eth1
 
+master_ip: "{{ hostvars[groups['master']['ansible_' + iface]['ipv4']['address'] }}"
+
 nfsshare: /home
-nfsserver: "{{ hostvars[groups['master'][0]]['ansible_eth1']['ipv4']['address'] }}"
+nfsserver: "{{ master_ip }}"
 nfspath: /export
+
 nfsopts: "auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800"
 
 clusteruser: 'hadoop'
+clusteruser_home: '/home/hadoop'
 
 hadoop:
     
@@ -34,5 +38,9 @@ hadoop:
     dfs_namenode_http_address_port: 50070
 
 spark:
+    spark_version: "1.0.2-bin-hadoop2"
     spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/spark-1.0.2-bin-hadoop2.tgz"
     spark_root: "/opt/spark/"
+
+mesos:
+    mesos_install_prefix: "/usr/local"

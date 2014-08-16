@@ -1,8 +1,10 @@
+# MapReduce configuration
+
 <configuration>
   
   <property>
     <name>mapred.job.tracker</name>
-    <value>{{ hostvars[groups['master']]['ansible_hostname'] }}:{{ hadoop['mapred_job_tracker_port'] }}</value>
+    <value>{{ hostvars[groups['master'][0]]['ansible_hostname'] }}:{{ hadoop['mapred_job_tracker_port'] }}</value>
   </property>
 
   <property>

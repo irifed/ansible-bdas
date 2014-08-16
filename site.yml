@@ -1,5 +1,4 @@
 ---
-
 - name: apply common configuration to all nodes
   hosts: all
   roles:
@@ -13,27 +12,32 @@
 - name: fetch SSH key file from master
   hosts: master
   roles: 
-    - clusteruser_master
+    - sshkey_donor 
 
 - name: put fetched SSH key to all other hosts
   hosts: workers
   roles:
-    - clusteruser_worker
+    - sshkey_acceptor
 
-- name: setup nfs master
-  hosts: master
-  roles: 
-    - nfs_server
+#- name: setup nfs master
+#  hosts: master
+#  roles: 
+#    - nfs_server
+#
+#- name: setup nfs clients
+#  hosts: workers
+#  roles: 
+#    - nfs_client
+#
+#- name: setup mpi cluster
+#  hosts: all
+#  roles:
+#    - openmpi
 
-- name: setup nfs clients
-  hosts: workers
-  roles: 
-    - nfs_client
-
-- name: setup mpi cluster
+- name: install Java
   hosts: all
   roles:
-    - openmpi
+    - java
 
 - name: prepare for Hadoop installation
   hosts: all
@@ -50,7 +54,9 @@
   roles:
     - hdfs_datanode
 
-- name: deploy Spark
+# TODO deploy standalone Hadoop MR
+
+- name: deploy standalone Spark
   hosts: all
   roles:
     - spark_common
@@ -60,3 +66,30 @@
   roles:
     - spark_master
 
+# Mesos requires passwordless SSH for user root
+- name: setup passwordless SSH for user root - donor key
+  hosts: master
+  roles:
+    - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
+
+- name: setup passwordless SSH for user root - accept key
+  hosts: workers
+  roles:
+    - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
+
+- name: install Mesos
+  hosts: all
+  roles:
+    - mesos
+
+- name: start Mesos cluster
+  hosts: master
+  roles: 
+    - mesos_master
+
+- name: deploy Spark on Mesos
+  hosts: master
+  roles:
+    - spark_mesos
+
+# TODO deploy Hadoop MR1 on Mesos
