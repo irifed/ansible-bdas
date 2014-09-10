@@ -27,8 +27,8 @@ hadoop:
        - /namedir1/
        - /namedir2/
     dfs_replication: 3
-    dfs_namenode_handler_count: 50
-    dfs_blocksize: 67108864
+    dfs_namenode_handler_count: 10
+    dfs_blocksize: 134217728
     dfs_datanode_data_dir:
        - /datadir1/
        - /datadir2/
