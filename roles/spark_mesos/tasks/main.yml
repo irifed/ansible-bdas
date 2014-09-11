@@ -1,10 +1,13 @@
 ---
 - name: Create /tmp on HDFS
   shell: su - hadoop -c "hadoop fs -mkdir /tmp"
+  # ignore errors if file exists
   ignore_errors: true
 
 - name: Upload Spark package to HDFS
   shell: su - hadoop -c "hadoop fs -put /tmp/spark-{{ spark['spark_version'] }}.tgz /tmp"
+  # ignore errors if file exists
+  ignore_errors: true
 
 - name: Configure Spark to use Mesos
   template: src=spark-env.sh.j2 dest=/opt/spark/conf/spark-env.sh
