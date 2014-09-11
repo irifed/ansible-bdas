@@ -8,6 +8,7 @@
     - htop
     - nmon
     - build-essential
+    - python-swiftclient
 
 - name: populate /etc/hosts
   template: src=etc/hosts.j2 dest=/etc/hosts
