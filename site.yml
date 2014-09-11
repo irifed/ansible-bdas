@@ -39,6 +39,11 @@
   roles:
     - java
 
+- name: install Scala
+  hosts: all
+  roles:
+    - scala
+
 - name: prepare for Hadoop installation
   hosts: all
   roles:
