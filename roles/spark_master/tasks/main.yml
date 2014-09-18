@@ -1,5 +1,0 @@
----
-- name: populate conf/slaves file
-  template: src=conf/slaves.j2 dest={{ spark['spark_root'] }}/conf/slaves
-  
-# TODO start spark?

@@ -17,8 +17,8 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<property>
+  <property>
       <name>fs.defaultFS</name>
-      <value>hdfs://{{ hostvars[groups['master'][0]]['ansible_hostname'] + ':' ~ hadoop['fs_default_FS_port'] }}/</value>
+      <value>hdfs://{{ hadoop['hdfs_namenode_host'] }}:{{ hadoop['hdfs_defaultFS_port'] }}/</value>
   </property>
 </configuration>

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-export MESOS_NATIVE_LIBRARY=/usr/local/lib/libmesos.so
-export SPARK_EXECUTOR_URI=hdfs://{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}/tmp/spark-{{ spark['spark_version'] }}.tgz
-export MASTER=mesos://{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}:5050
+
+# options for standalone deploy mode
+export SPARK_MASTER_IP={{ spark['spark_master_host'] }}
+export SPARK_MASTER_PORT={{ spark['spark_master_port'] }}
+export SPARK_WORKER_MEMORY={{ spark['spark_worker_memory'] }}
+export HADOOP_CONF_DIR={{ hadoop['conf_dir'] }}
 
 # This file is sourced when running various Spark programs.
 # Copy it as spark-env.sh and edit that to configure Spark for your site.

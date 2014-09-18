@@ -4,20 +4,20 @@
   roles:
     - common
 
-- name: create {{ clusteruser }} user
+- name: create clusteruser user
   hosts: all
   roles:
     - clusteruser_common
 
-- name: fetch SSH key file from master
+- name: setup passwordless SSH for clsteruser - donor key
   hosts: master
   roles: 
-    - sshkey_donor 
+    - { role: sshkey_donor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
 
-- name: put fetched SSH key to all other hosts
+- name: setup passwordless SSH for clsteruser - accept key
   hosts: workers
   roles:
-    - sshkey_acceptor
+    - { role: sshkey_acceptor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
 
 #- name: setup nfs master
 #  hosts: master
@@ -39,8 +39,13 @@
   roles:
     - java
 
+- name: install SBT
+  hosts: master
+  roles:
+    - sbt
+
 - name: install Scala
-  hosts: all
+  hosts: master
   roles:
     - scala
 
@@ -59,19 +64,12 @@
   roles:
     - hdfs_datanode
 
-# TODO deploy standalone Hadoop MR
-
 - name: deploy standalone Spark
-  hosts: all
-  roles:
-    - spark_common
-
-- name: configure Spark master
   hosts: master
   roles:
-    - spark_master
+    - spark_standalone
 
-# Mesos requires passwordless SSH for user root
+# Mesos requires passwordless SSH access for user 'root'
 - name: setup passwordless SSH for user root - donor key
   hosts: master
   roles:
@@ -96,5 +94,25 @@
   hosts: master
   roles:
     - spark_mesos
+
+- name: install mysql on Hive master
+  hosts: master
+  roles:
+    - mysql_server
+
+- name: install Hive
+  hosts: master
+  roles:
+    - hive
+
+- name: deploy Shark on standalone Spark
+  hosts: master
+  roles:
+    - shark_standalone
+
+- name: prepare for AMPCamp Big Data Mini Course
+  hosts: master
+  roles:
+    - ampcamp_master
 
 # TODO deploy Hadoop MR1 on Mesos

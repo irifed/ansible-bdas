@@ -1,0 +1,12 @@
+---
+- name: Download Shark pre-built package
+  get_url: url={{ shark['shark_download_url'] }} dest="/tmp/shark-{{ shark['shark_version'] }}.tgz"
+
+- name: Extract Shark archive
+  unarchive: copy=no src="/tmp/shark-{{ shark['shark_version'] }}.tgz" dest=/opt/
+
+- name: Create link to Shark directory
+  file: src=/opt/shark-{{ shark['shark_version'] }} dest=/opt/shark state=link
+
+- name: Configure Shark to run in standalone deploy mode
+  template: src=conf/shark-env.sh.j2 dest=/opt/shark/conf/shark-env.sh

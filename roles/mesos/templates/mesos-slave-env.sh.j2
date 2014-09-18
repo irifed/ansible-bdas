@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # This file contains environment variables that are passed to mesos-slave.
 # To get a description of all options run mesos-slave --help; any option
 # supported as a command-line option is also supported as an environment
@@ -7,7 +9,7 @@
 
 # The mesos master URL to contact. Should be host:port for
 # non-ZooKeeper based masters, otherwise a zk:// or file:// URL.
-export MESOS_master={{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}:5050
+export MESOS_master={{ mesos['mesos_master_host'] }}:{{ mesos['mesos_master_port'] }}
 
 # Other options you're likely to want to set:
 export MESOS_log_dir=/var/log/mesos

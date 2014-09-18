@@ -1,0 +1,20 @@
+---
+- name: Download AMPCamp dataset from SoftLayer Object Store
+  shell: >
+    if [ ! -d /tmp/{{ampcamp['ampcamp_data_folder']}} ]; then 
+      cd /tmp;
+      swift -A {{ ampcamp['swift_api_url'] }} 
+        -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
+        download {{ ampcamp['ampcamp_container'] }} --prefix {{ ampcamp['ampcamp_data_folder' ]}}; 
+    fi; 
+
+- name: Put AMPCamp data from /tmp to HDFS
+  shell: >
+    su - {{ hdfsuser }} -c "hadoop fs -mkdir -p /wiki/pagecounts";
+    su - {{ hdfsuser }} -c "hadoop fs -put /tmp/{{ampcamp['ampcamp_data_folder']}}/* /wiki/pagecounts/"
+  ignore_errors: true
+
+- name: Start Spark cluster
+  shell: "{{ spark['spark_root'] }}/sbin/start-all.sh"
+
+

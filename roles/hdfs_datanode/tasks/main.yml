@@ -15,7 +15,7 @@
   notify: restart hadoop slave services
 
 - name: Create the data directory for the slave nodes to store the data
-  file: path={{ item }} owner=hdfs group=hdfs state=directory
+  file: path={{ item }} owner={{ hdfsuser }} group={{ hdfsuser }} state=directory mode=0700
   with_items: hadoop.dfs_datanode_data_dir
 
 - name: start hadoop slave services
