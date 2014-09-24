@@ -65,7 +65,7 @@
     - hdfs_datanode
 
 - name: deploy standalone Spark
-  hosts: master
+  hosts: all
   roles:
     - spark_standalone
 
