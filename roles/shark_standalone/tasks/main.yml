@@ -15,3 +15,14 @@
   shell: >
     su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp";
     su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /tmp";
+
+- name: Fix protobuf bug by replacing the hive-exec jar and removing 2.4.1 jar
+  # https://groups.google.com/forum/#!topic/shark-users/0pGIVQvaYfo
+  shell:
+    cd /opt/shark/lib_managed/jars/edu.berkeley.cs.shark/hive-exec;
+    mv hive-exec-0.11.0-shark-0.9.1.jar hive-exec-0.11.0-shark-0.9.1.jar.orig;
+    swift -A {{ ampcamp['swift_api_url'] }} 
+      -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
+      download {{ ampcamp['ampcamp_container'] }} hive-exec-0.11.0-shark-0.9.1.jar;
+    cd /opt/shark/lib_managed/bundles/com.google.protobuf/protobuf-java/;
+
