@@ -80,20 +80,21 @@
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
 
-- name: install Mesos
-  hosts: all
-  roles:
-    - mesos
-
-- name: start Mesos cluster
-  hosts: master
-  roles: 
-    - mesos_master
-
-- name: deploy Spark on Mesos
-  hosts: master
-  roles:
-    - spark_mesos
+## spark 0.9.1 segfaults on mesos
+#- name: install Mesos
+#  hosts: all
+#  roles:
+#    - mesos
+#
+#- name: start Mesos cluster
+#  hosts: master
+#  roles: 
+#    - mesos_master
+#
+#- name: deploy Spark on Mesos
+#  hosts: master
+#  roles:
+#    - spark_mesos
 
 - name: install mysql on Hive master
   hosts: master
