@@ -25,9 +25,13 @@
   shell: >
     mysql --user=root --password={{ mysql['mysql_root_password'] }} 
     metastore < {{ hive['hive_metastore_schema'] }}
-  notify:
-    - restart hive
+    # ignore error if duplicate exists
+  ignore_errors: yes
 
 - name: add user hive to group hadoop to allow writing to hdfs://
   user: name={{ hive['hive_user'] }} groups={{ hadoopgroup }} append=yes
 
+- name: configure hive-site.xml
+  template: src=conf/hive-site.xml.j2 dest={{ hive['hive_conf_dir'] }}/hive-site.xml
+  notify:
+    - restart hive
