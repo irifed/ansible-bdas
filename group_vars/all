@@ -49,8 +49,8 @@ hadoop:
       - /mapred2/
 
 spark:
-    spark_version: "1.0.2-bin-hadoop2"
-    spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/spark-1.0.2-bin-hadoop2.tgz"
+    spark_version: "0.9.2-bin-hadoop2"
+    spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/spark-0.9.2-bin-hadoop2.tgz"
     spark_root: "/opt/spark/"
     spark_master_host: "{{ master_hostname }}"
     spark_master_port: 7077
@@ -59,6 +59,7 @@ spark:
 # total memory for use by all apps
 # make sure to leave at least 1gb for the system on slaves
     spark_worker_memory: 14g
+    spark_mem: 14g
 
 hive:
     hive_user: hive
