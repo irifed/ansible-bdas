@@ -106,7 +106,7 @@
     - hive
 
 - name: deploy Shark on standalone Spark
-  hosts: master
+  hosts: all
   roles:
     - shark_standalone
 
