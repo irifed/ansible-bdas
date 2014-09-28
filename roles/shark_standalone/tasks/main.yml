@@ -10,3 +10,8 @@
 
 - name: Configure Shark to run in standalone deploy mode
   template: src=conf/shark-env.sh.j2 dest=/opt/shark/conf/shark-env.sh
+
+- name: Update permissions on /tmp dir to allow hadoop group write
+  shell: >
+    su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp";
+    su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /tmp";

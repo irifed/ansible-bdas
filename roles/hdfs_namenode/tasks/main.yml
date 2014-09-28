@@ -31,3 +31,5 @@
     su - {{ hdfsuser }} -c "hadoop fs -chown {{ hdfsuser }}:{{ hadoopgroup }} /"; 
     su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /" && touch /usr/lib/hadoop/namenode.initialized
 
+- name: Add root to hadoop group
+  user: name=root groups={{ hadoopgroup }} append=yes
