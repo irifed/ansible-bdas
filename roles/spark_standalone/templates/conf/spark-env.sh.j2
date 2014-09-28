@@ -3,6 +3,7 @@
 # options for standalone deploy mode
 export SPARK_MASTER_IP={{ spark['spark_master_host'] }}
 export SPARK_MASTER_PORT={{ spark['spark_master_port'] }}
+export SPARK_MEM={{ spark['spark_mem'] }}
 export SPARK_WORKER_MEMORY={{ spark['spark_worker_memory'] }}
 export HADOOP_CONF_DIR={{ hadoop['conf_dir'] }}
 
