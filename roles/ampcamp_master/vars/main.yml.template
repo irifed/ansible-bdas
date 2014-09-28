@@ -1,8 +1,0 @@
-ampcamp:
-    swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
-    swift_user: "YOUR SWIFT USERNAME"
-    swift_key: "YOU SWIFT API KEY"
-    ampcamp_container: "ampcamp-data"
-    ampcamp_data_folder: "wikistats_20090505-01"
-
-
