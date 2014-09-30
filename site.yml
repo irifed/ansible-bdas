@@ -1,0 +1,119 @@
+---
+- name: apply common configuration to all nodes
+  hosts: all
+  roles:
+    - common
+
+- name: create clusteruser user
+  hosts: all
+  roles:
+    - clusteruser_common
+
+- name: setup passwordless SSH for clsteruser - donor key
+  hosts: master
+  roles: 
+    - { role: sshkey_donor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+
+- name: setup passwordless SSH for clsteruser - accept key
+  hosts: workers
+  roles:
+    - { role: sshkey_acceptor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+
+#- name: setup nfs master
+#  hosts: master
+#  roles: 
+#    - nfs_server
+#
+#- name: setup nfs clients
+#  hosts: workers
+#  roles: 
+#    - nfs_client
+#
+#- name: setup mpi cluster
+#  hosts: all
+#  roles:
+#    - openmpi
+
+- name: install Java
+  hosts: all
+  roles:
+    - java
+
+- name: install SBT
+  hosts: master
+  roles:
+    - sbt
+
+- name: install Scala
+  hosts: master
+  roles:
+    - scala
+
+- name: prepare for Hadoop installation
+  hosts: all
+  roles:
+    - hadoop_common
+
+- name: setup HDFS namenode
+  hosts: master
+  roles:
+    - hdfs_namenode
+
+- name: setup HDFS datanodes
+  hosts: workers
+  roles:
+    - hdfs_datanode
+
+- name: deploy standalone Spark
+  hosts: all
+  roles:
+    - spark_standalone
+
+# Mesos requires passwordless SSH access for user 'root'
+- name: setup passwordless SSH for user root - donor key
+  hosts: master
+  roles:
+    - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
+
+- name: setup passwordless SSH for user root - accept key
+  hosts: workers
+  roles:
+    - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
+
+## spark 0.9.1 segfaults on mesos
+#- name: install Mesos
+#  hosts: all
+#  roles:
+#    - mesos
+#
+#- name: start Mesos cluster
+#  hosts: master
+#  roles: 
+#    - mesos_master
+#
+#- name: deploy Spark on Mesos
+#  hosts: master
+#  roles:
+#    - spark_mesos
+
+- name: install mysql on Hive master
+  hosts: master
+  roles:
+    - mysql_server
+
+- name: install Hive
+  hosts: master
+  roles:
+    - hive
+
+- name: deploy Shark on standalone Spark
+  hosts: all
+  roles:
+    - shark_standalone
+
+- name: prepare for AMPCamp Big Data Mini Course
+  hosts: master
+  roles:
+    - ampcamp_master
+
+# TODO deploy Hadoop MR1 on Mesos

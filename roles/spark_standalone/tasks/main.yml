@@ -1,0 +1,19 @@
+---
+- name: Download Spark pre-built package
+  get_url: url={{ spark['spark_download_url'] }} dest="/tmp/spark-{{ spark['spark_version'] }}.tgz"
+
+- name: Extract Spark archive
+  unarchive: copy=no src="/tmp/spark-{{ spark['spark_version'] }}.tgz" dest=/opt/
+
+- name: Create link to Spark directory
+  file: src=/opt/spark-{{ spark['spark_version'] }} dest=/opt/spark state=link
+
+- name: Configure Spark to run in standalone deploy mode
+  template: src=conf/spark-env.sh.j2 dest=/opt/spark/conf/spark-env.sh
+
+- name: populate conf/slaves file
+  template: src=conf/slaves.j2 dest={{ spark['spark_root'] }}/conf/slaves
+
+- name: increase default spark.executor.memory parameter
+  template: src=conf/spark-defaults.conf.j2 dest={{ spark['spark_root'] }}/conf/spark-defaults.conf
+

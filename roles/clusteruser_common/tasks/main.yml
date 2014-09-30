@@ -1,0 +1,17 @@
+---
+- name: create cluster user on all hosts
+  user: name={{ clusteruser }} generate_ssh_key=yes ssh_key_bits=2048 state=present
+  # ignore 'permission denied' errors when user is already shared across NFS
+  ignore_errors: yes
+
+- name: disable strict host checking for cluster user
+  copy: src=sshconfig dest=/home/{{ clusteruser }}/.ssh/config
+
+- name: add cluster user to sudoers
+  lineinfile: "dest=/etc/sudoers
+  insertafter=EOF
+  line='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
+  regexp='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
+  state=present"
+
+

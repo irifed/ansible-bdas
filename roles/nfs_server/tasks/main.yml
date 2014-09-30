@@ -1,0 +1,26 @@
+---
+# setup NFS share
+
+- name: install NFS server and client
+  apt: name={{ item }} state=installed
+  with_items:
+    - nfs-common
+    - nfs-kernel-server
+
+- name: ensure /export mount line is present in /etc/fstab
+  mount: name={{ nfspath }} src={{ nfsshare }} fstype=none opts=bind state=present
+
+- name: actually bind /home to /export folder
+  mount: name={{ nfspath }} src={{ nfsshare}} fstype=none opts=bind state=mounted
+
+- name: allow access to exported NFS share for other hosts
+  template: src=etc/exports.j2 dest=/etc/exports
+  notify:
+    - reload exports
+    - restart nfs-kernel-server
+
+- name: ensure NFS service is running at the end
+  action: service name=nfs-kernel-server state=started
+
+
+

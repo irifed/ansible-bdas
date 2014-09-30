@@ -1,0 +1,95 @@
+# Variables for all hosts
+
+iface: eth1
+
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}"
+master_fqdn: "{{ hostvars[groups['master'][0]]['ansible_fqdn'] }}"
+master_hostname: "{{ hostvars[groups['master'][0]]['ansible_hostname'] }}"
+
+nfsshare: /home
+nfsserver: "{{ master_ip }}"
+nfspath: /export
+
+nfsopts: "auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800"
+
+clusteruser: "hadoop"
+clusteruser_home: "/home/hadoop"
+
+# CDH5 runs HDFS services as user 'hdfs' by default
+hdfsuser: "hdfs"
+hadoopgroup: "hadoop"
+
+# based on https://github.com/bennojoy/ansible_examples/
+hadoop:
+    hadoop_home: /usr/lib/hadoop
+    conf_dir: /etc/hadoop/conf
+    
+#Variables for <core-site_xml> - common
+    hdfs_namenode_host: "{{ master_hostname }}"
+    hdfs_defaultFS_port: 8020
+    #nameservice_id: mycluster4
+
+#Variables for <hdfs-site_xml>     
+    
+    dfs_permissions_superusergroup: "{{ hdfsuser }}"
+    dfs_namenode_name_dir: 
+       - /namedir1/
+       - /namedir2/
+    dfs_replication: 3
+    dfs_blocksize: 134217728
+    dfs_datanode_data_dir:
+       - /datadir1/
+       - /datadir2/
+
+#Variables for <mapred-site_xml>     
+    mapred_job_tracker_port: 8021
+
+    mapred_local_dir:
+      - /mapred1/
+      - /mapred2/
+
+spark:
+    spark_version: "0.9.2-bin-hadoop2"
+    spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/spark-0.9.2-bin-hadoop2.tgz"
+    spark_root: "/opt/spark/"
+    spark_master_host: "{{ master_hostname }}"
+    spark_master_port: 7077
+# memory per executor, increase if see java out-of-memory exceptions in spark shell
+    spark_executor_memory: 6g
+# total memory for use by all apps
+# make sure to leave at least 1gb for the system on slaves
+    spark_worker_memory: 14g
+    spark_mem: 14g
+
+hive:
+    hive_user: hive
+    hive_conf_dir: "/etc/hive/conf"
+    hive_metastore_user: hiveuser
+    hive_metastore_password: hivepassword 
+    hive_metastore_host: "{{ master_hostname }}"
+    hive_metastore_port: 9083
+    hive_metastore_schema: "/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.12.0.mysql.sql"
+
+mysql:
+    mysql_host: localhost
+    mysql_port: 3306
+    mysql_root_password: Lot7unN1iG4A
+    mysql_conf_dir: "/etc/mysql"
+
+shark:
+    shark_version: "0.9.1-bin-hadoop2"
+    shark_download_url: "https://s3.amazonaws.com/spark-related-packages/shark-0.9.1-bin-hadoop2.tgz"
+    shark_root: "/opt/shark/"
+    shark_master_memory: 12g
+
+mesos:
+    mesos_install_prefix: "/usr/local"
+    mesos_master_host: "{{ master_hostname }}"
+    mesos_master_port: 5050
+
+ampcamp:
+    swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
+    swift_user: "IBMOS278184-17:i.fedulova"
+    swift_key: "6941affacdc0c6bb60ac7dc2886b548462da32587ae4cdca7307ff6ea2b3a14c"
+    ampcamp_container: "ampcamp-data"
+    ampcamp_data_folder: "wikistats_20090505-01"
