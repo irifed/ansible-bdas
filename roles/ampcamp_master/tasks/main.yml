@@ -1,12 +1,13 @@
 ---
 - name: Download AMPCamp dataset from SoftLayer Object Store
+  # do not change indentation in the long line below
   shell: >
     if [ ! -d /tmp/{{ampcamp['ampcamp_data_folder']}} ]; then 
-      cd /tmp;
-      swift -A {{ ampcamp['swift_api_url'] }} 
-        -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
-        download {{ ampcamp['ampcamp_container'] }} --prefix {{ ampcamp['ampcamp_data_folder' ]}}; 
-    fi; 
+    cd /tmp;
+    swift -A {{ ampcamp['swift_api_url'] }} 
+    -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
+    download {{ ampcamp['ampcamp_container'] }} --prefix {{ ampcamp['ampcamp_data_folder' ]}}; 
+    fi 
 
 - name: Put AMPCamp data from /tmp to HDFS
   shell: >
