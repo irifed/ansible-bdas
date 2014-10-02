@@ -1,18 +1,31 @@
 ---
-- name: Download AMPCamp dataset from SoftLayer Object Store
+- name: Create AMPCamp data folder
+  file: path=/{{ ampcamp['ampcamp_container'] }} state=directory
+
+- name: Download AMPCamp wikistats dataset from SoftLayer Object Store
   # do not change indentation in the long line below
   shell: >
-    if [ ! -d /tmp/{{ampcamp['ampcamp_data_folder']}} ]; then 
-    cd /tmp;
+    if [ ! -d /{{ ampcamp['ampcamp_container'] }}/{{ item }} ]; then 
+    cd /{{ ampcamp['ampcamp_container'] }};
     swift -A {{ ampcamp['swift_api_url'] }} 
     -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
-    download {{ ampcamp['ampcamp_container'] }} --prefix {{ ampcamp['ampcamp_data_folder' ]}}; 
+    download {{ ampcamp['ampcamp_container'] }} --prefix {{ item }}; 
     fi 
+  with_items:
+    - wikistats_20090505-01
+    - wikistats_20090505_restricted-01
+    - movielens
+    - wiki_links
+    - training.tar.gz
 
-- name: Put AMPCamp data from /tmp to HDFS
+- name: Put AMPCamp data from /ampcamp-data to HDFS
   shell: >
     su - {{ hdfsuser }} -c "hadoop fs -mkdir -p /wiki/pagecounts";
-    su - {{ hdfsuser }} -c "hadoop fs -put /tmp/{{ampcamp['ampcamp_data_folder']}}/* /wiki/pagecounts/"
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wikistats_20090505-01/* /wiki/pagecounts/";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wikistats_20090505_restricted-01 /";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wiki_links /";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/movielens /";
+  # ignore errors if already exists
   ignore_errors: true
 
 - name: Start Spark cluster
