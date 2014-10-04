@@ -9,6 +9,7 @@
     - nmon
     - build-essential
     - python-swiftclient
+    - libgfortran3
 
 - name: populate /etc/hosts
   template: src=etc/hosts.j2 dest=/etc/hosts
