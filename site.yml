@@ -116,4 +116,9 @@
   roles:
     - ampcamp_master
 
+- name: deploy Tachyon
+  hosts: all
+  roles:
+      - tachyon_standalone
+
 # TODO deploy Hadoop MR1 on Mesos

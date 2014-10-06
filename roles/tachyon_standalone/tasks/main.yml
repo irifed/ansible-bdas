@@ -1,0 +1,24 @@
+--- 
+#- name: Download pre-build Tachyon package
+#  get_url: url={{ tachyon['tachyon_download_url'] }} dest="/tmp/tachyon.tgz"
+
+- name: Download custom build Tachyon package for CHD5 from SL swift
+  shell: >
+    cd /tmp;
+    swift -A {{ ampcamp['swift_api_url'] }} 
+    -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
+    download {{ ampcamp['ampcamp_container'] }} {{ tachyon['tachyon_download_url'] }}  
+
+- name: Extract Tachyon archive
+  # unarchive: copy=no src="/tmp/tachyon.tgz" dest=/opt/
+  unarchive: copy=no src="/tmp/{{ tachyon['tachyon_download_url'] }}" dest=/opt/
+
+- name: Create link to Tachyon directory
+  file: src=/opt/tachyon-{{ tachyon['tachyon_version'] }} dest={{ tachyon['tachyon_root'] }} state=link
+
+- name: Configure Tachyon
+  template: src=conf/tachyon-env.sh.j2 dest={{ tachyon['tachyon_root' ]}}/conf/tachyon-env.sh
+
+- name: populate conf/slaves file
+  template: src=conf/slaves.j2 dest={{ tachyon['tachyon_root'] }}/conf/slaves
+
