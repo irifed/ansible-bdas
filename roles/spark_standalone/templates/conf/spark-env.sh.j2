@@ -7,6 +7,11 @@ export SPARK_MEM={{ spark['spark_mem'] }}
 export SPARK_WORKER_MEMORY={{ spark['spark_worker_memory'] }}
 export HADOOP_CONF_DIR={{ hadoop['conf_dir'] }}
 
+SPARK_JAVA_OPTS+='
+ -Dspark.serializer=org.apache.spark.serializer.KryoSerializer
+ -Dspark.kryo.registrator=org.apache.spark.graphx.GraphKryoRegistrator '
+export SPARK_JAVA_OPTS
+
 # This file is sourced when running various Spark programs.
 # Copy it as spark-env.sh and edit that to configure Spark for your site.
 
