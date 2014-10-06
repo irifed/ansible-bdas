@@ -2,6 +2,9 @@
 - name: Install OpenJDK package
   apt:  name=openjdk-7-jdk state=installed
 
+- name: Install maven for potential rebuilding Tachyon etc
+  apt:  name=maven state=installed
+
 - name: Create a directory for java 
   file: state=directory path=/usr/java/
 
