@@ -6,10 +6,10 @@
   unarchive: copy=no src="/tmp/spark-{{ spark['spark_version'] }}.tgz" dest=/opt/
 
 - name: Create link to Spark directory
-  file: src=/opt/spark-{{ spark['spark_version'] }} dest=/opt/spark state=link
+  file: src=/opt/spark-{{ spark['spark_version'] }} dest={{ spark['spark_root'] }} state=link
 
 - name: Configure Spark to run in standalone deploy mode
-  template: src=conf/spark-env.sh.j2 dest=/opt/spark/conf/spark-env.sh
+  template: src=conf/spark-env.sh.j2 dest={{ spark['spark_root'] }}/conf/spark-env.sh
 
 - name: populate conf/slaves file
   template: src=conf/slaves.j2 dest={{ spark['spark_root'] }}/conf/slaves
