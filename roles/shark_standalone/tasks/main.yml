@@ -1,20 +1,23 @@
 ---
 - name: Download Shark pre-built package
   get_url: url={{ shark['shark_download_url'] }} dest="/tmp/shark-{{ shark['shark_version'] }}.tgz"
+  tags:
+    - install
 
 - name: Extract Shark archive
   unarchive: copy=no src="/tmp/shark-{{ shark['shark_version'] }}.tgz" dest=/opt/
+  tags:
+    - install
 
 - name: Create link to Shark directory
   file: src=/opt/shark-{{ shark['shark_version'] }} dest=/opt/shark state=link
+  tags:
+    - install
 
 - name: Configure Shark to run in standalone deploy mode
   template: src=conf/shark-env.sh.j2 dest=/opt/shark/conf/shark-env.sh
-
-- name: Update permissions on /tmp dir to allow hadoop group write
-  shell: >
-    su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp";
-    su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /tmp";
+  tags:
+    - configure
 
 - name: Fix protobuf bug by replacing the hive-exec jar and removing 2.4.1 jar
   # https://groups.google.com/forum/#!topic/shark-users/0pGIVQvaYfo
@@ -26,4 +29,6 @@
     -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
     download {{ ampcamp['ampcamp_container'] }} hive-exec-0.11.0-shark-0.9.1.jar;
     cd /opt/shark/lib_managed/bundles/com.google.protobuf/protobuf-java/;
+  tags:
+    - install
 

@@ -6,20 +6,26 @@
     - hive-metastore
     - hive-server2
     - libmysql-java
+  tags:
+    - install
 
 - name: setup mysql java connector
-  shell: ln -s /usr/share/java/mysql-connector-java.jar /usr/lib/hive/lib/libmysql-java.jar
-  # ignore error if file exists
-  ignore_errors: yes
+  file: src=/usr/share/java/mysql-connector-java.jar dest=/usr/lib/hive/lib/libmysql-java.jar state=link
+  tags:
+    - install
 
 - name: create metastore database
   mysql_db: name=metastore state=present login_user=root login_password={{ mysql['mysql_root_password'] }}
+  tags:
+    - install
 
 - name: create hive metastore user in mysql
   mysql_user: >
     name={{ hive['hive_metastore_user'] }} password={{ hive['hive_metastore_password'] }} 
     priv=metastore.*:ALL host=localhost state=present
     login_user=root login_password={{ mysql['mysql_root_password'] }}
+  tags:
+    - install
 
 - name: init metastore schema
   shell: >
@@ -27,11 +33,17 @@
     metastore < {{ hive['hive_metastore_schema'] }}
     # ignore error if duplicate exists
   ignore_errors: yes
+  tags:
+    - install
 
 - name: add user hive to group hadoop to allow writing to hdfs://
   user: name={{ hive['hive_user'] }} groups={{ hadoopgroup }} append=yes
+  tags:
+    - install
 
 - name: configure hive-site.xml
   template: src=conf/hive-site.xml.j2 dest={{ hive['hive_conf_dir'] }}/hive-site.xml
   notify:
     - restart hive
+  tags:
+    - configure

@@ -1,15 +1,25 @@
 ---
 - name: Install OpenJDK package
   apt:  name=openjdk-7-jdk state=installed
+  tags:
+    - install
 
 - name: Install maven for potential rebuilding Tachyon etc
   apt:  name=maven state=installed
+  tags:
+    - install
 
 - name: Create a directory for java 
   file: state=directory path=/usr/java/
+  tags:
+    - install
 
 - name: Create a link for java
   file: src=/usr/lib/jvm/java-7-openjdk-amd64/jre state=link path=/usr/java/default
+  tags:
+    - install
 
 - name: Export JAVA_HOME
   command: echo "export JAVA_HOME=/usr/java/default" >> /etc/profile
+  tags:
+    - install

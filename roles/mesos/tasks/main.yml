@@ -2,28 +2,42 @@
 - name: add Mesosphere apt key
   #apt_key: id=E56151BF url=http://keyserver.ubuntu.com/ state=present
   command: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+  tags:
+    - install
 
 - name: add Mesosphere apt repository
   apt_repository: repo='deb [arch=amd64] http://repos.mesosphere.io/ubuntu trusty main' state=present update_cache=yes
+  tags:
+    - install
 
 - name: install Mesos package
   apt: name={{ item }} state=present
   with_items:
     - mesos
     - marathon
+  tags:
+    - install
 
 - name: configure cluster masters
   template: src=masters.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/masters
+  tags:
+    - configure
 
 - name: configure cluster slaves
   template: src=slaves.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/slaves
+  tags:
+    - configure
 
 - name: setup deploy environment for slave
   template: src=mesos-slave-env.sh.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/mesos-slave-env.sh
+  tags:
+    - configure
 
 - name: setup deploy environment
   copy: src={{ item }} dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/{{ item }}
   with_items:
     - mesos-master-env.sh
     - mesos-deploy-env.sh
+  tags:
+    - configure
 

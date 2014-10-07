@@ -8,17 +8,27 @@
     swift -A {{ ampcamp['swift_api_url'] }} 
     -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
     download {{ ampcamp['ampcamp_container'] }} {{ tachyon['tachyon_download_url'] }}  
+  tags:
+    - install
 
 - name: Extract Tachyon archive
   # unarchive: copy=no src="/tmp/tachyon.tgz" dest=/opt/
   unarchive: copy=no src="/tmp/{{ tachyon['tachyon_download_url'] }}" dest=/opt/
+  tags:
+    - install
 
 - name: Create link to Tachyon directory
   file: src=/opt/tachyon-{{ tachyon['tachyon_version'] }} dest={{ tachyon['tachyon_root'] }} state=link
+  tags:
+    - install
 
 - name: Configure Tachyon
   template: src=conf/tachyon-env.sh.j2 dest={{ tachyon['tachyon_root' ]}}/conf/tachyon-env.sh
+  tags:
+    - configure
 
 - name: populate conf/slaves file
   template: src=conf/slaves.j2 dest={{ tachyon['tachyon_root'] }}/conf/slaves
+  tags:
+    - configure
 

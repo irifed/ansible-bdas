@@ -2,21 +2,33 @@
 ---
 - name: Create lib dir
   file: path={{sbt_lib_path}} state=directory
+  tags:
+    - install
 
 - name: Clean existing version {{sbt_version}} if it exists
   file: path={{sbt_lib_path_target}} state=absent
+  tags:
+    - install
 
 - name: Download sbt v{{sbt_version}}
   get_url: url={{sbt_download_url}} 
     dest=/tmp/{{sbt_archive_file}}
     force=no
+  tags:
+    - install
 
 - name: Unpack sbt
   command: tar -xvf {{sbt_archive_file}} chdir=/tmp/
+  tags:
+    - install
 
 - name: Move (by force) Sbt to lib
   command: mv /tmp/{{sbt_archive_name}} {{sbt_lib_path_target}} chdir=/tmp/
+  tags:
+    - install
 
 - name: Link sbt
   command: sudo ln -sf {{sbt_lib_path_target}}/bin/sbt {{sbt_link_target}}
+  tags:
+    - install
 

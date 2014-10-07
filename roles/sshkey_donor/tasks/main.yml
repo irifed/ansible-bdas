@@ -1,13 +1,19 @@
 ---
 - name: create SSH keys for user clusteruser
   user: name={{ clusteruser }} generate_ssh_key=yes ssh_key_bits=2048
+  tags:
+    - configure
 
 - name: prepare for passwordless ssh
   shell: /bin/cat /{{ clusteruser_home }}/.ssh/id_rsa.pub >> /{{ clusteruser_home }}/.ssh/authorized_keys
+  tags:
+    - configure
 
 - name: create tmp dir for ssh keys
   local_action: command mkdir sshkeys
   ignore_errors: yes
+  tags:
+    - configure
 
 - name: fetch SSH key file from master
   fetch: src={{ clusteruser_home }}/.ssh/{{ item }} dest=sshkeys/{{ item }} flat=yes
@@ -15,3 +21,5 @@
     - id_rsa
     - id_rsa.pub
     - authorized_keys
+  tags:
+    - configure

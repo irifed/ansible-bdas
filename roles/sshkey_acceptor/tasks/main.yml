@@ -5,7 +5,11 @@
     - id_rsa
     - id_rsa.pub
     - authorized_keys
+  tags:
+    - configure
 
 - name: cleanup sshkeys
   local_action: command rm -rf sshkeys
+  tags:
+    - configure
   

@@ -2,7 +2,9 @@
 - name: Install the namenode package
   apt: name={{ item }} state=installed
   with_items: 
-   - hadoop-hdfs-namenode
+    - hadoop-hdfs-namenode
+  tags:
+    - install
 
 - name: Copy the hadoop configuration files
   template: src=roles/common/templates/hadoop_conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
@@ -11,27 +13,49 @@
    - hdfs-site.xml
    - slaves
   notify: restart hadoop master services
+  tags:
+    - configure
 
 - name: create HDFS user
   user: name={{ hdfsuser }} generate_ssh_key=yes ssh_key_bits=2048 state=present
+  tags:
+    - install
 
 - name: Create the data directory for the namenode metadata
   file: path={{ item }} owner={{ hdfsuser }} group={{ hdfsuser }} state=directory mode=0700
   with_items: hadoop.dfs_namenode_name_dir
+  tags:
+    - install
 
 - name: Format the namenode
   shell: >
     creates=/usr/lib/hadoop/namenode.formatted 
     su - {{ hdfsuser }} -c "hadoop namenode -format" && touch /usr/lib/hadoop/namenode.formatted
+  tags:
+    - configure
 
 - name: Start hadoop namenode services
   service: name=hadoop-hdfs-namenode state=started
+  tags:
+    - configure
 
 - name: Create / on HDFS and set permissions
   shell: >
     creates=/usr/lib/hadoop/namenode.initialized 
     su - {{ hdfsuser }} -c "hadoop fs -chown {{ hdfsuser }}:{{ hadoopgroup }} /"; 
     su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /" && touch /usr/lib/hadoop/namenode.initialized
+  tags:
+    - configure
 
 - name: Add root to hadoop group
   user: name=root groups={{ hadoopgroup }} append=yes
+  tags:
+    - install
+
+- name: Update permissions on /tmp dir to allow hadoop group write
+  shell: >
+    su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp";
+    su - {{ hdfsuser }} -c "hadoop fs -chmod 0775 /tmp";
+  tags:
+    - configure
+

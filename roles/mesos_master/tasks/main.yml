@@ -1,3 +1,5 @@
 ---
 - name: start Mesos cluster
   command: "{{ mesos['mesos_install_prefix'] }}/sbin/mesos-start-cluster.sh"
+  tags:
+    - configure

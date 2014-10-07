@@ -1,6 +1,8 @@
 ---
 - name: Create AMPCamp data folder
   file: path=/{{ ampcamp['ampcamp_container'] }} state=directory
+  tags: 
+    - install
 
 - name: Download AMPCamp wikistats dataset from SoftLayer Object Store
   # do not change indentation in the long line below
@@ -17,6 +19,8 @@
     - movielens
     - wiki_links
     - training.tar.gz
+  tags:
+    - install
 
 - name: Put AMPCamp data from /ampcamp-data to HDFS
   shell: >
@@ -27,9 +31,13 @@
     su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/movielens /";
   # ignore errors if already exists
   ignore_errors: true
+  tags:
+    - configure
 
 - name: Unpack training stuff to /root
   unarchive: copy=no src="/{{ ampcamp['ampcamp_container'] }}/training.tar.gz" dest=/root/
+  tags:
+    - install
 
 - name: Create some symlinks for convenience
   file: src=/root/training/{{ item }} dest=/root/{{ item }} state=link
@@ -38,20 +46,25 @@
     - machine-learning
     - scala-app-template
     - streaming
+  tags:
+    - install
 
 - name: Create /root/spark-ec2 directory to store configs required by AMPCamp examples
   file: path=/root/spark-ec2 state=directory
+  tags:
+    - install
 
 - name: Create config files required by AMPCamp examples MLlib and GraphX
   template: src={{ item }}.j2 dest=/root/spark-ec2/{{ item }}
   with_items:
     - cluster-url
     - masters
-
-
+  tags:
+    - configure
 
 - name: Attempt to start Spark cluster
   shell: "{{ spark['spark_root'] }}/sbin/start-all.sh"
   ignore_errors: true
-
+  tags:
+    - configure
 

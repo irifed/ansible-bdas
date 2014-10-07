@@ -4,7 +4,10 @@
 - name: Install the datanode package
   apt: name={{ item }} state=installed
   with_items: 
-   - hadoop-hdfs-datanode
+    - hadoop-hdfs-datanode
+  tags:
+    - install
+    - configure
 
 - name: Copy the hadoop configuration files
   template: src=roles/common/templates/hadoop_conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
@@ -13,13 +16,19 @@
    - hdfs-site.xml
    - slaves
   notify: restart hadoop slave services
+  tags:
+    - configure
 
 - name: Create the data directory for the slave nodes to store the data
   file: path={{ item }} owner={{ hdfsuser }} group={{ hdfsuser }} state=directory mode=0700
   with_items: hadoop.dfs_datanode_data_dir
+  tags:
+    - configure
 
 - name: start hadoop slave services
   service: name={{ item }} state=started
   with_items:
     - hadoop-hdfs-datanode
+  tags:
+    - configure
   

@@ -4,17 +4,25 @@
   with_items:
     - mysql-server
     - python-mysqldb # required for setting up mysql via ansible
+  tags:
+    - install 
 
 - name: Copy the my.cnf file
   template: src=my.cnf.j2 dest={{ mysql['mysql_conf_dir'] }}/my.cnf
   notify:
     - restart mysql
+  tags:
+    - configure
 
 - name: Set mysql root password at localhost
   mysql_user: name=root host=localhost password={{ mysql['mysql_root_password'] }}
+  tags:
+    - configure
 
 - name: copy .my.cnf file with root password credentials
   template: src=_my.cnf.j2 dest=/root/.my.cnf mode=0600
   notify:
     - restart mysql
+  tags:
+    - configure
 
