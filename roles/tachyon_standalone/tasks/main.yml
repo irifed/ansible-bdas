@@ -5,9 +5,9 @@
 - name: Download custom build Tachyon package for CHD5 from SL swift
   shell: >
     cd /tmp;
-    swift -A {{ ampcamp['swift_api_url'] }} 
-    -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
-    download {{ ampcamp['ampcamp_container'] }} {{ tachyon['tachyon_download_url'] }}  
+    swift -A {{ swift_api_url }} 
+    -U {{ swift_user }} -K {{ swift_key }} 
+    download {{ bdas_container }} {{ tachyon['tachyon_download_url'] }}  
   tags:
     - install
 

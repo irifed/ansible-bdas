@@ -29,9 +29,9 @@
   shell: >
     cd /opt/shark/lib_managed/jars/edu.berkeley.cs.shark/hive-exec;
     mv hive-exec-0.11.0-shark-0.9.1.jar hive-exec-0.11.0-shark-0.9.1.jar.orig;
-    swift -A {{ ampcamp['swift_api_url'] }} 
-    -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
-    download {{ ampcamp['ampcamp_container'] }} hive-exec-0.11.0-shark-0.9.1.jar;
+    swift -A {{ swift_api_url }} 
+    -U {{ swift_user }} -K {{ swift_key }} 
+    download {{ bdas_container }} hive-exec-0.11.0-shark-0.9.1.jar;
     cd /opt/shark/lib_managed/bundles/com.google.protobuf/protobuf-java/;
   tags:
     - install

@@ -1,17 +1,17 @@
 ---
 - name: Create AMPCamp data folder
-  file: path=/{{ ampcamp['ampcamp_container'] }} state=directory
+  file: path=/{{ ampcamp_container }} state=directory
   tags: 
     - install
 
 - name: Download AMPCamp wikistats dataset from SoftLayer Object Store
   # do not change indentation in the long line below
   shell: >
-    if [ ! -d /{{ ampcamp['ampcamp_container'] }}/{{ item }} ]; then 
-    cd /{{ ampcamp['ampcamp_container'] }};
-    swift -A {{ ampcamp['swift_api_url'] }} 
-    -U {{ ampcamp['swift_user'] }} -K {{ ampcamp['swift_key'] }} 
-    download {{ ampcamp['ampcamp_container'] }} --prefix {{ item }}; 
+    if [ ! -d /{{ ampcamp_container }}/{{ item }} ]; then 
+    cd /{{ ampcamp_container }};
+    swift -A {{ swift_api_url }} 
+    -U {{ swift_user }} -K {{ swift_key }} 
+    download {{ ampcamp_container }} --prefix {{ item }}; 
     fi 
   with_items:
     - wikistats_20090505-01
@@ -25,17 +25,17 @@
 - name: Put AMPCamp data from /ampcamp-data to HDFS
   shell: >
     su - {{ hdfsuser }} -c "hadoop fs -mkdir -p /wiki/pagecounts";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wikistats_20090505-01/* /wiki/pagecounts/";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wikistats_20090505_restricted-01 /";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/wiki_links /";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp['ampcamp_container'] }}/movielens /";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wikistats_20090505-01/* /wiki/pagecounts/";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wikistats_20090505_restricted-01 /";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wiki_links /";
+    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/movielens /";
   # ignore errors if already exists
   ignore_errors: true
   tags:
     - configure
 
 - name: Unpack training stuff to /root
-  unarchive: copy=no src="/{{ ampcamp['ampcamp_container'] }}/training.tar.gz" dest=/root/
+  unarchive: copy=no src="/{{ ampcamp_container }}/training.tar.gz" dest=/root/
   tags:
     - install
 
