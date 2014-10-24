@@ -106,10 +106,10 @@
   roles:
     - hive
 
-- name: deploy Shark on standalone Spark
-  hosts: all
-  roles:
-    - shark_standalone
+#- name: deploy Shark on standalone Spark
+#  hosts: all
+#  roles:
+#    - shark_standalone
 
 - name: prepare for AMPCamp Big Data Mini Course
   hosts: master
