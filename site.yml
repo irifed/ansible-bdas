@@ -47,7 +47,7 @@
 - name: install Scala
   hosts: master
   roles:
-    - scala
+    - { role: scala, scala_lib_path: "/opt" }
 
 - name: prepare for Hadoop installation
   hosts: all
