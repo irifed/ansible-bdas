@@ -14,15 +14,19 @@
   tags:
     - install
 
-- include_vars: ../../spark_standalone/vars/main.yml
+- include_vars: roles/hadoop_common/vars/main.yml
   tags:
     - configure
 
-- include_vars: ../../mesos/vars/main.yml
+- include_vars: roles/spark_standalone/vars/main.yml
   tags:
     - configure
 
-- include_vars: ../../hive/vars/main.yml
+- include_vars: roles/mesos/vars/main.yml
+  tags:
+    - configure
+
+- include_vars: roles/hive/vars/main.yml
   tags:
     - configure
 

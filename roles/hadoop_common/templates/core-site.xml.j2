@@ -19,7 +19,7 @@
 <configuration>
   <property>
       <name>fs.defaultFS</name>
-      <value>hdfs://{{ hadoop['hdfs_namenode_host'] }}:{{ hadoop['hdfs_defaultFS_port'] }}/</value>
+      <value>hdfs://{{ hdfs_namenode_host }}:{{ hdfs_defaultFS_port }}/</value>
   </property>
   <property>
       <name>fs.tachyon.impl</name>

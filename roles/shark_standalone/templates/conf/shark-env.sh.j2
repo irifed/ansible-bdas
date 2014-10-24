@@ -29,7 +29,7 @@ export SHARK_MASTER_MEM={{ shark_master_memory }}
 export HIVE_CONF_DIR={{ hive_conf_dir }}
 
 # For running Shark in distributed mode, set the following:
-export HADOOP_HOME={{ hadoop['hadoop_home'] }}
+export HADOOP_HOME={{ hadoop_home }}
 export SPARK_HOME={{ spark_root }}
 export MASTER=spark://{{ spark_master_host }}:{{ spark_master_port }}
 # Only required if using Mesos:

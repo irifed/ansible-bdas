@@ -13,7 +13,11 @@
   tags:
     - configure 
 
-- include_vars: ../../mesos/vars/main.yml
+- include_vars: roles/hadoop_common/vars/main.yml
+  tags:
+    - configure
+
+- include_vars: roles/mesos/vars/main.yml
   tags:
     - configure
 

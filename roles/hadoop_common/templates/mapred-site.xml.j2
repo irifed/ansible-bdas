@@ -20,12 +20,12 @@
 <configuration>
   <property>
     <name>mapred.job.tracker</name>
-    <value>{{ hadoop['mapred_job_tracker_host'] }}:{{ hadoop['mapred_job_tracker_port'] }}</value>
+    <value>{{ mapred_job_tracker_host }}:{{ mapred_job_tracker_port }}</value>
   </property>
 
   <property>
     <name>mapred.local.dir</name>
-    <value>{{ hadoop["mapred_local_dir"] | join(',') }}</value>
+    <value>{{ mapred_local_dir | join(',') }}</value>
   </property>
 
   <property>

@@ -9,8 +9,12 @@
     - install
     - configure
 
+- include_vars: roles/hadoop_common/vars/main.yml
+  tags:
+    - configure
+
 - name: Copy the hadoop configuration files
-  template: src=roles/common/templates/hadoop_conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
+  template: src=roles/hadoop_common/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
   with_items: 
    - core-site.xml
    - hdfs-site.xml

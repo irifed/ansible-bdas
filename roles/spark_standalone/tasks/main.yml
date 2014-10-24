@@ -14,7 +14,11 @@
   tags:
     - install
 
-- include_vars: ../../tachyon_standalone/vars/main.yml
+- include_vars: roles/hadoop_common/vars/main.yml
+  tags:
+    - configure
+
+- include_vars: roles/tachyon_standalone/vars/main.yml
   tags:
     - configure
 

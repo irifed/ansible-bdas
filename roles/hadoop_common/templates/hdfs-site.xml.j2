@@ -19,22 +19,22 @@
 <configuration>
   <property>
     <name>dfs.blocksize</name>
-    <value>{{ hadoop['dfs_blocksize'] }}</value>
+    <value>{{ dfs_blocksize }}</value>
   </property>
   <property>
     <name>dfs.permissions.superusergroup</name>
-    <value>{{ hadoop['dfs_permissions_superusergroup'] }}</value>
+    <value>{{ dfs_permissions_superusergroup }}</value>
   </property>
   <property>
     <name>dfs.replication</name>
-    <value>{{ hadoop['dfs_replication'] }}</value>
+    <value>{{ dfs_replication }}</value>
   </property>
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>{{ hadoop['dfs_namenode_name_dir'] | join(',') }}</value>
+    <value>{{ dfs_namenode_name_dir | join(',') }}</value>
   </property>
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>{{ hadoop['dfs_datanode_data_dir'] | join(',') }}</value>
+    <value>{{ dfs_datanode_data_dir | join(',') }}</value>
   </property>
 </configuration>

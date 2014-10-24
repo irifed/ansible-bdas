@@ -1,0 +1,32 @@
+---
+# CDH5 runs HDFS services as user 'hdfs' by default
+hdfsuser: "hdfs"
+hadoopgroup: "hadoop"
+
+# based on https://github.com/bennojoy/ansible_examples/
+hadoop_home: /usr/lib/hadoop
+conf_dir: /etc/hadoop/conf
+
+#Variables for <core-site_xml> - common
+hdfs_namenode_host: "{{ master_hostname }}"
+hdfs_defaultFS_port: 8020
+#nameservice_id: mycluster4
+
+#Variables for <hdfs-site_xml>     
+
+dfs_permissions_superusergroup: "{{ hdfsuser }}"
+dfs_namenode_name_dir: 
+  - /namedir1/
+  - /namedir2/
+  dfs_replication: 3
+  dfs_blocksize: 134217728
+  dfs_datanode_data_dir:
+    - /datadir1/
+    - /datadir2/
+
+#Variables for <mapred-site_xml>     
+mapred_job_tracker_port: 8021
+
+mapred_local_dir:
+  - /mapred1/
+  - /mapred2/
