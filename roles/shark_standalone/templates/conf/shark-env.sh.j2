@@ -19,7 +19,7 @@ export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
 
 # (Required) Amount of memory used per slave node. This should be in the same
 # format as the JVM's -Xmx option, e.g. 300m or 1g.
-export SPARK_MEM={{ spark['spark_worker_memory'] }}
+export SPARK_MEM={{ spark_worker_memory }}
 
 # (Required) Set the master program's memory
 export SHARK_MASTER_MEM={{ shark['shark_master_memory'] }}
@@ -30,8 +30,8 @@ export HIVE_CONF_DIR={{ hive['hive_conf_dir'] }}
 
 # For running Shark in distributed mode, set the following:
 export HADOOP_HOME={{ hadoop['hadoop_home'] }}
-export SPARK_HOME={{ spark['spark_root' ]}}
-export MASTER=spark://{{ spark['spark_master_host'] }}:{{ spark['spark_master_port'] }}
+export SPARK_HOME={{ spark_root }}
+export MASTER=spark://{{ spark_master_host }}:{{ spark_master_port }}
 # Only required if using Mesos:
 export MESOS_NATIVE_LIBRARY={{ mesos['mesos_install_prefix'] }}/lib/libmesos.so
 

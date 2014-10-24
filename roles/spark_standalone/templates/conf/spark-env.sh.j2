@@ -3,14 +3,14 @@
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/jre
 
 # options for standalone deploy mode
-export SPARK_MASTER_IP={{ spark['spark_master_host'] }}
-export SPARK_MASTER_PORT={{ spark['spark_master_port'] }}
-export SPARK_WORKER_MEMORY={{ spark['spark_worker_memory'] }}
+export SPARK_MASTER_IP={{ spark_master_host }}
+export SPARK_MASTER_PORT={{ spark_master_port }}
+export SPARK_WORKER_MEMORY={{ spark_worker_memory }}
 export HADOOP_CONF_DIR={{ hadoop['conf_dir'] }}
 
 {#
 #### only for Spark 0.9.x ####
-export SPARK_MEM={{ spark['spark_mem'] }} 
+export SPARK_MEM={{ spark_mem }} 
 SPARK_JAVA_OPTS+='
 # -Dspark.serializer=org.apache.spark.serializer.KryoSerializer
 # -Dspark.kryo.registrator=org.apache.spark.graphx.GraphKryoRegistrator '

@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # options for standalone deploy mode
-export SPARK_MASTER_IP={{ spark['spark_master_host'] }}
-export SPARK_MASTER_PORT={{ spark['spark_master_port'] }}
-export SPARK_WORKER_MEMORY={{ spark['spark_worker_memory'] }}
+export SPARK_MASTER_IP={{ spark_master_host }}
+export SPARK_MASTER_PORT={{ spark_master_port }}
+export SPARK_WORKER_MEMORY={{ spark_worker_memory }}
 export HADOOP_CONF_DIR={{ hadoop['conf_dir'] }}
 
 # options for running under mesos
 export MESOS_NATIVE_LIBRARY={{ mesos['mesos_install_prefix'] }}/lib/libmesos.so
-export SPARK_EXECUTOR_URI=hdfs://{{ hadoop['hdfs_namenode_host'] }}/tmp/spark-{{ spark['spark_version'] }}.tgz
+export SPARK_EXECUTOR_URI=hdfs://{{ hadoop['hdfs_namenode_host'] }}/tmp/spark-{{ spark_version }}.tgz
 export MASTER=mesos://{{ mesos['mesos_master_host'] }}:{{ mesos['mesos_master_port'] }}
 
 # This file is sourced when running various Spark programs.

@@ -54,6 +54,10 @@
   tags:
     - install
 
+- include_vars: ../../spark_standalone/vars/main.yml
+  tags:
+    - configure
+
 - name: Create config files required by AMPCamp examples MLlib and GraphX
   template: src={{ item }}.j2 dest=/root/spark-ec2/{{ item }}
   with_items:
@@ -63,7 +67,7 @@
     - configure
 
 - name: Attempt to start Spark cluster
-  shell: "{{ spark['spark_root'] }}/sbin/start-all.sh"
+  shell: "{{ spark_root }}/sbin/start-all.sh"
   ignore_errors: true
   tags:
     - configure
