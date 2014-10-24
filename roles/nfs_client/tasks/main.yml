@@ -3,17 +3,29 @@
 
 - name: install nfs client
   apt: name=nfs-common state=installed
+  tags:
+    - install
 
 #- name: Ensure portmap is running 
 #  action: service name=portmap state=started enabled=yes
 
+- include_vars: roles/nfs_server/vars/main.yml
+  tags:
+    - configure
+
 - name: Ensure {{nfsshare}} directory exists
   action: file path={{nfsshare}} state=directory
+  tags:
+    - configure
 
 #- debug: var=hostvars
 
 - name: configure /etc/fstab on clients
   mount: name={{nfsshare}} src={{nfsserver}}:{{nfspath}} fstype=nfs opts={{nfsopts}} state=present
+  tags:
+    - configure
 
 - name: actually mount NFS on clients
   mount: name={{nfsshare}} src={{nfsserver}}:{{nfspath}} fstype=nfs opts={{nfsopts}} state=mounted
+  tags:
+    - configure

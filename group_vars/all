@@ -6,12 +6,6 @@ master_ip: "{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['addres
 master_fqdn: "{{ hostvars[groups['master'][0]]['ansible_fqdn'] }}"
 master_hostname: "{{ hostvars[groups['master'][0]]['ansible_hostname'] }}"
 
-nfsshare: /home
-nfsserver: "{{ master_ip }}"
-nfspath: /export
-
-nfsopts: "auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800"
-
 clusteruser: "hadoop"
 clusteruser_home: "/home/hadoop"
 

@@ -6,21 +6,28 @@
   with_items:
     - nfs-common
     - nfs-kernel-server
+  tags:
+    - install
 
 - name: ensure /export mount line is present in /etc/fstab
   mount: name={{ nfspath }} src={{ nfsshare }} fstype=none opts=bind state=present
+  tags:
+    - configure
 
 - name: actually bind /home to /export folder
   mount: name={{ nfspath }} src={{ nfsshare}} fstype=none opts=bind state=mounted
+  tags:
+    - configure
 
 - name: allow access to exported NFS share for other hosts
   template: src=etc/exports.j2 dest=/etc/exports
   notify:
     - reload exports
     - restart nfs-kernel-server
+  tags:
+    - configure
 
 - name: ensure NFS service is running at the end
   action: service name=nfs-kernel-server state=started
-
-
-
+  tags:
+    - configure

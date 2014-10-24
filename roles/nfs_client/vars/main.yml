@@ -1,0 +1,3 @@
+---
+nfsserver: "{{ master_ip }}"
+nfsopts: "auto,noatime,nolock,bg,nfsvers=4,intr,tcp,actimeo=1800"
