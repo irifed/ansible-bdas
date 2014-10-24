@@ -18,11 +18,11 @@ dfs_permissions_superusergroup: "{{ hdfsuser }}"
 dfs_namenode_name_dir: 
   - /namedir1/
   - /namedir2/
-  dfs_replication: 3
-  dfs_blocksize: 134217728
-  dfs_datanode_data_dir:
-    - /datadir1/
-    - /datadir2/
+dfs_replication: 3
+dfs_blocksize: 134217728
+dfs_datanode_data_dir:
+  - /datadir1/
+  - /datadir2/
 
 #Variables for <mapred-site_xml>     
 mapred_job_tracker_port: 8021
