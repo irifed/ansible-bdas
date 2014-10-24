@@ -48,17 +48,6 @@ hadoop:
       - /mapred1/
       - /mapred2/
 
-tachyon:
-
-hive:
-    hive_user: hive
-    hive_conf_dir: "/etc/hive/conf"
-    hive_metastore_user: hiveuser
-    hive_metastore_password: hivepassword 
-    hive_metastore_host: "{{ master_hostname }}"
-    hive_metastore_port: 9083
-    hive_metastore_schema: "/usr/lib/hive/scripts/metastore/upgrade/mysql/hive-schema-0.12.0.mysql.sql"
-
 mysql:
     mysql_host: localhost
     mysql_port: 3306

@@ -55,12 +55,12 @@
   
   <property>
     <name>javax.jdo.option.ConnectionUserName</name>
-    <value>{{ hive['hive_metastore_user'] }}</value>
+    <value>{{ hive_metastore_user }}</value>
   </property>
   
   <property>
     <name>javax.jdo.option.ConnectionPassword</name>
-    <value>{{ hive['hive_metastore_password'] }}</value>
+    <value>{{ hive_metastore_password }}</value>
   </property>
   
   <property>
@@ -80,7 +80,7 @@
   
   <property>
     <name>hive.metastore.uris</name>
-    <value>thrift://{{ hive['hive_metastore_host'] }}:{{ hive['hive_metastore_port'] }}</value>
+    <value>thrift://{{ hive_metastore_host }}:{{ hive_metastore_port }}</value>
     <description>IP address (or fully-qualified domain name) and port of the metastore host</description>
   </property>
 

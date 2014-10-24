@@ -22,6 +22,10 @@
   tags:
     - configure
 
+- include_vars: ../../hive/vars/main.yml
+  tags:
+    - configure
+
 - name: Configure Shark to run in standalone deploy mode
   template: src=conf/shark-env.sh.j2 dest=/opt/shark/conf/shark-env.sh
   tags:
