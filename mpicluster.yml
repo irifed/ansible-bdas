@@ -1,0 +1,36 @@
+---
+- name: apply common configuration to all nodes
+  hosts: all
+  roles:
+    - common
+
+- name: create clusteruser user
+  hosts: all
+  roles:
+    - clusteruser_common
+
+- name: setup passwordless SSH for clsteruser - donor key
+  hosts: master
+  roles: 
+    - { role: sshkey_donor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+
+- name: setup passwordless SSH for clsteruser - accept key
+  hosts: workers
+  roles:
+    - { role: sshkey_acceptor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+
+- name: setup nfs master
+  hosts: master
+  roles: 
+    - nfs_server
+
+- name: setup nfs clients
+  hosts: workers
+  roles: 
+    - nfs_client
+
+- name: setup mpi cluster
+  hosts: all
+  roles:
+    - openmpi
+
