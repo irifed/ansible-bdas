@@ -15,7 +15,7 @@ SPARK_JAVA_OPTS+='
 # -Dspark.serializer=org.apache.spark.serializer.KryoSerializer
 # -Dspark.kryo.registrator=org.apache.spark.graphx.GraphKryoRegistrator '
 export SPARK_JAVA_OPTS
-export SPARK_CLASSPATH={{ tachyon['tachyon_root']}}/client/target/tachyon-client-0.5.0-jar-with-dependencies.jar:$SPARK_CLASSPATH
+export SPARK_CLASSPATH={{ tachyon_root}}/client/target/tachyon-client-0.5.0-jar-with-dependencies.jar:$SPARK_CLASSPATH
 #### ####
 #}
 

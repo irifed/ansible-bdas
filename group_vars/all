@@ -49,15 +49,6 @@ hadoop:
       - /mapred2/
 
 tachyon:
-    # tachyon_version: "0.5.0"
-    # pre-built tachyon does not work with CDH5
-    # tachyon_download_url: "http://tachyon-project.org/downloads/tachyon-0.5.0-bin.tar.gz"
-    # download custom built tachyon from SL swift
-    tachyon_version: "0.5.0-hadoop2.3"
-    tachyon_download_url: "tachyon-0.5.0-hadoop2.3.tgz"
-    tachyon_root: "/opt/tachyon"
-    tachyon_master_host: "{{ master_hostname }}"
-    tachyon_underfs_address: "hdfs://{{ hadoop['hdfs_namenode_host'] }}:{{ hadoop['hdfs_defaultFS_port'] }}"
 
 hive:
     hive_user: hive
