@@ -1,5 +1,9 @@
 ---
+- include_vars: ../../mesos/vars/main.yml
+  tags:
+    - configure
+
 - name: start Mesos cluster
-  command: "{{ mesos['mesos_install_prefix'] }}/sbin/mesos-start-cluster.sh"
+  command: "{{ mesos_install_prefix }}/sbin/mesos-start-cluster.sh"
   tags:
     - configure

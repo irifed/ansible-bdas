@@ -9,7 +9,7 @@
 
 # The mesos master URL to contact. Should be host:port for
 # non-ZooKeeper based masters, otherwise a zk:// or file:// URL.
-export MESOS_master={{ mesos['mesos_master_host'] }}:{{ mesos['mesos_master_port'] }}
+export MESOS_master={{ mesos_master_host }}:{{ mesos_master_port }}
 
 # Other options you're likely to want to set:
 export MESOS_log_dir=/var/log/mesos

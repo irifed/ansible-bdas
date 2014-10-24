@@ -1,0 +1,4 @@
+---
+mesos_install_prefix: "/usr/local"
+mesos_master_host: "{{ master_hostname }}"
+mesos_master_port: 5050

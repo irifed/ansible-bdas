@@ -19,22 +19,22 @@
     - install
 
 - name: configure cluster masters
-  template: src=masters.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/masters
+  template: src=masters.j2 dest={{ mesos_install_prefix }}/var/mesos/deploy/masters
   tags:
     - configure
 
 - name: configure cluster slaves
-  template: src=slaves.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/slaves
+  template: src=slaves.j2 dest={{ mesos_install_prefix }}/var/mesos/deploy/slaves
   tags:
     - configure
 
 - name: setup deploy environment for slave
-  template: src=mesos-slave-env.sh.j2 dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/mesos-slave-env.sh
+  template: src=mesos-slave-env.sh.j2 dest={{ mesos_install_prefix }}/var/mesos/deploy/mesos-slave-env.sh
   tags:
     - configure
 
 - name: setup deploy environment
-  copy: src={{ item }} dest={{ mesos['mesos_install_prefix'] }}/var/mesos/deploy/{{ item }}
+  copy: src={{ item }} dest={{ mesos_install_prefix }}/var/mesos/deploy/{{ item }}
   with_items:
     - mesos-master-env.sh
     - mesos-deploy-env.sh

@@ -80,11 +80,6 @@ shark:
     shark_root: "/opt/shark/"
     shark_master_memory: 12g
 
-mesos:
-    mesos_install_prefix: "/usr/local"
-    mesos_master_host: "{{ master_hostname }}"
-    mesos_master_port: 5050
-
 swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
 swift_user: "IBMOS278184-17:i.fedulova"
 swift_key: "6941affacdc0c6bb60ac7dc2886b548462da32587ae4cdca7307ff6ea2b3a14c"

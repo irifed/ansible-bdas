@@ -13,6 +13,10 @@
   tags:
     - configure 
 
+- include_vars: ../../mesos/vars/main.yml
+  tags:
+    - configure
+
 - name: Configure Spark to use Mesos
   template: src=conf/spark-env.sh.j2 dest=/opt/spark/conf/spark-env.sh
   tags:
