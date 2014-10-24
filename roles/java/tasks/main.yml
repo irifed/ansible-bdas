@@ -1,4 +1,6 @@
 ---
+# TODO use variables for setting JDK version and JAVA_HOME
+
 - name: Install OpenJDK package
   apt:  name=openjdk-7-jdk state=installed
   tags:
