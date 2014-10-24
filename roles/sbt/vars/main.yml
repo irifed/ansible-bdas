@@ -1,0 +1,10 @@
+---
+sbt_playbook_version: "0.1.1"
+sbt_version: "0.13.1"
+sbt_archive_name: "sbt"
+sbt_archive_file: "{{sbt_archive_name}}.tgz"
+sbt_download_url: "http://repo.scala-sbt.org/scalasbt/sbt-native-packages/org/scala-sbt/sbt/{{sbt_version}}/{{sbt_archive_file}}"
+
+sbt_lib_path: "/usr/share/sbt"
+sbt_lib_path_target: "{{sbt_lib_path}}/{{sbt_version}}"
+sbt_link_target: "/usr/bin"
