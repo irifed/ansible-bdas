@@ -14,8 +14,12 @@
   tags:
     - install
 
+- include_vars: ../../mysql_server/vars/main.yml
+  tags:
+    - configure
+
 - name: create metastore database
-  mysql_db: name=metastore state=present login_user=root login_password={{ mysql['mysql_root_password'] }}
+  mysql_db: name=metastore state=present login_user=root login_password={{ mysql_root_password }}
   tags:
     - install
 
@@ -23,13 +27,13 @@
   mysql_user: >
     name={{ hive_metastore_user }} password={{ hive_metastore_password }} 
     priv=metastore.*:ALL host=localhost state=present
-    login_user=root login_password={{ mysql['mysql_root_password'] }}
+    login_user=root login_password={{ mysql_root_password }}
   tags:
     - install
 
 - name: init metastore schema
   shell: >
-    mysql --user=root --password={{ mysql['mysql_root_password'] }} 
+    mysql --user=root --password={{ mysql_root_password }} 
     metastore < {{ hive_metastore_schema }}
     # ignore error if duplicate exists
   ignore_errors: yes

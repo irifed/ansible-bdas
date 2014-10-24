@@ -1,0 +1,6 @@
+---
+mysql_host: localhost
+mysql_port: 3306
+mysql_root_password: Lot7unN1iG4A
+mysql_conf_dir: "/etc/mysql"
+

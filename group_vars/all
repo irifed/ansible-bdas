@@ -48,12 +48,6 @@ hadoop:
       - /mapred1/
       - /mapred2/
 
-mysql:
-    mysql_host: localhost
-    mysql_port: 3306
-    mysql_root_password: Lot7unN1iG4A
-    mysql_conf_dir: "/etc/mysql"
-
 swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
 swift_user: "IBMOS278184-17:i.fedulova"
 swift_key: "6941affacdc0c6bb60ac7dc2886b548462da32587ae4cdca7307ff6ea2b3a14c"
