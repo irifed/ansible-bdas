@@ -1,0 +1,10 @@
+---
+scala_playbook_version: "0.1.1"
+scala_version: "2.10.3"
+scala_version_name: "scala-{{scala_version}}"
+scala_archive_file: "{{scala_version_name}}.tgz"
+scala_download_url: "http://www.scala-lang.org/files/archive/{{scala_archive_file}}"
+
+scala_lib_path: "/usr/share/scala"
+scala_lib_path_target: "{{scala_lib_path}}/{{scala_version_name}}"
+scala_link_target: "/usr/bin"
