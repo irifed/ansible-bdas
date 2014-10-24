@@ -1,16 +1,16 @@
 ---
 - name: Download Shark pre-built package
-  get_url: url={{ shark['shark_download_url'] }} dest="/tmp/shark-{{ shark['shark_version'] }}.tgz"
+  get_url: url={{ shark_download_url }} dest="/tmp/shark-{{ shark_version }}.tgz"
   tags:
     - install
 
 - name: Extract Shark archive
-  unarchive: copy=no src="/tmp/shark-{{ shark['shark_version'] }}.tgz" dest=/opt/
+  unarchive: copy=no src="/tmp/shark-{{ shark_version }}.tgz" dest=/opt/
   tags:
     - install
 
 - name: Create link to Shark directory
-  file: src=/opt/shark-{{ shark['shark_version'] }} dest=/opt/shark state=link
+  file: src=/opt/shark-{{ shark_version }} dest=/opt/shark state=link
   tags:
     - install
 

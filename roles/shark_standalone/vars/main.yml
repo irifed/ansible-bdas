@@ -1,0 +1,5 @@
+---
+shark_version: "0.9.1-bin-hadoop2"
+shark_download_url: "https://s3.amazonaws.com/spark-related-packages/shark-0.9.1-bin-hadoop2.tgz"
+shark_root: "/opt/shark/"
+shark_master_memory: 12g
