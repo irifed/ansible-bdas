@@ -27,7 +27,7 @@
 
 - name: Create the data directory for the namenode metadata
   file: path={{ item }} owner={{ hdfsuser }} group={{ hdfsuser }} state=directory mode=0700
-  with_items: hadoop.dfs_namenode_name_dir
+  with_items: dfs_namenode_name_dir
   tags:
     - install
 

@@ -1,4 +1,16 @@
 ---
+- include_vars: roles/spark_standalone/vars/main.yml
+  tags:
+    - configure
+
+- include_vars: roles/hadoop_common/vars/main.yml
+  tags:
+    - configure
+
+- include_vars: roles/mesos/vars/main.yml
+  tags:
+    - configure
+
 - name: Create /tmp on HDFS
   shell: su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp"
   # ignore errors if file exists
@@ -12,14 +24,6 @@
   ignore_errors: true
   tags:
     - configure 
-
-- include_vars: roles/hadoop_common/vars/main.yml
-  tags:
-    - configure
-
-- include_vars: roles/mesos/vars/main.yml
-  tags:
-    - configure
 
 - name: Configure Spark to use Mesos
   template: src=conf/spark-env.sh.j2 dest=/opt/spark/conf/spark-env.sh
