@@ -1,0 +1,20 @@
+---
+- hosts: master
+  vars: 
+      - test1: "spark-test.scala"
+  tasks:
+      - name: put Spark test to master node
+        copy: src={{ test1 }} dest=/root/{{ test1 }}
+
+      - include_vars: ../group_vars/all
+      - include_vars: ../roles/spark_standalone/vars/main.yml
+
+      - name: run Spark test
+        shell: "{{ spark_root }}/bin/spark-shell --master spark://{{ spark_master_host }}:{{ spark_master_port }} -i:/root/{{ test1 }}"
+        register: spark_shell_out
+      - fail: msg="Spark did not work correctly"
+        when: "'PASSED' not in spark_shell_out.stdout"
+      - debug: msg="Spark test passed!"
+
+
+
