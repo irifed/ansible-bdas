@@ -1,0 +1,20 @@
+---
+- name: set up .vim
+  file: path={{ goodies_home }}/.vim/autoload state=directory
+
+- name: create .vim/bundle directory
+  file: path={{ goodies_home }}/.vim/bundle state=directory
+
+- name: download pathogen.vim
+  get_url: url=http://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim dest={{ goodies_home }}/.vim/autoload/pathogen.vim
+
+- name: download vimrc
+  get_url: url=https://raw.githubusercontent.com/irifed/dotfiles-pub/master/.vimrc dest={{ goodies_home }}/.vimrc
+
+- name: download tmux.conf
+  get_url: url=https://raw.githubusercontent.com/irifed/dotfiles-pub/master/.tmux.conf dest={{ goodies_home }}/.tmux.conf
+
+- name: install vim-scala module
+  git: repo=https://github.com/derekwyatt/vim-scala.git dest={{ goodies_home }}/.vim/bundle/vim-scala
+
+
