@@ -95,11 +95,6 @@
 #  roles:
 #    - shark_standalone
 
-- name: prepare for AMPCamp Big Data Mini Course
-  hosts: master
-  roles:
-    - ampcamp_master
-
 - name: deploy Tachyon
   hosts: all
   roles:

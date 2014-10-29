@@ -37,3 +37,9 @@
   tags:
     - configure
 
+- name: Attempt to start Spark cluster
+  shell: "{{ spark_root }}/sbin/start-all.sh"
+  ignore_errors: true
+  tags:
+    - configure
+
