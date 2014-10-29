@@ -64,7 +64,6 @@
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
 
- spark 0.9.1 segfaults on mesos
 - name: install Mesos
   hosts: all
   roles:
