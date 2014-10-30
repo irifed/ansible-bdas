@@ -1,0 +1,21 @@
+---
+- name: install some tools for convenience
+  apt: name={{ item }} state=present
+  with_items:
+    - vim
+    - tmux
+    - git
+    - htop
+    - nmon
+    - build-essential
+    - python-swiftclient
+    - libgfortran3
+    - python-pycurl
+  tags:
+    - install
+
+- name: populate /etc/hosts
+  template: src=etc/hosts.j2 dest=/etc/hosts
+  tags:
+    - configure
+

@@ -1,0 +1,28 @@
+---
+#- name: install the 'Development tools' package group
+#  yum: name="@Development tools" state=present
+
+- name: install EPEL repository
+  yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present 
+
+- name: install some tools for convenience
+  yum: name={{ item }} state=present
+  with_items:
+    - vim
+    - tmux
+    - htop
+    - git
+    - python-pycurl
+    - libgfortran
+    - python-pip
+    # not available in CentOS
+    # - nmon
+    # - python-swiftclient # can be installed from pip
+  tags:
+    - install
+
+- name: populate /etc/hosts
+  template: src=etc/hosts.j2 dest=/etc/hosts
+  tags:
+    - configure
+
