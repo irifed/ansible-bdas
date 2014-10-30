@@ -1,0 +1,8 @@
+.vagrant/
+
+# Logs
+logs
+*.log
+
+# Local Help
+run.sh

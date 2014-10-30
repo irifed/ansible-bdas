@@ -1,0 +1,11 @@
+---
+#
+# Test Playbook
+#
+
+- hosts: all
+  sudo: yes
+  roles:
+    - role: ../../
+
+- include: main.yml

@@ -1,0 +1,4 @@
+- name: Install RedHat OS packages
+  yum: name={{item}} state=present
+  with_items:
+    - java-1.{{java_version}}.0-openjdk-devel
