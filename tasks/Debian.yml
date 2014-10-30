@@ -1,0 +1,25 @@
+- name: Install os packages
+  apt: pkg={{item}} state=present update_cache=yes
+  with_items: 
+    - openjdk-{{java_version}}-jre-headless
+    - openjdk-{{java_version}}-jdk
+
+- name: Resolve {{java_libjvm_path}}
+  shell: find {{java_libjvm_path}}
+  register: libjvm_path_resolved
+
+# Here we get back to ansible land...
+- name: Check for {{libjvm_path_resolved}}
+  stat: path={{libjvm_path_resolved.stdout}}
+  register: libjvm
+
+- name: Link libjvm
+  shell: ln -nsf {{libjvm_path_resolved.stdout}} {{java_libjvm_symlink_path}}
+  when: libjvm.stat.exists == true
+
+- name: Check if symlink created
+  stat: path={{java_libjvm_symlink_path}}
+  register: libjvm_symlink
+
+- fail: msg="Could not create libjvm symlink {{java_libjvm_symlink_path}}"
+  when: libjvm_symlink.stat.exists == False
