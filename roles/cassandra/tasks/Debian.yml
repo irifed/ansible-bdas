@@ -1,0 +1,69 @@
+- name: install Oracle Java ppa
+  apt_repository: repo='ppa:webupd8team/java' state=present
+  tags:
+    - install
+
+- name: accept Oracle license 
+  shell: >
+    echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections;
+    echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+  tags:
+    - install
+
+- name: install JRE
+  apt: name=oracle-java7-installer state=present
+  tags:
+    - install
+
+- name: Install JNA
+  apt: name=libjna-java state=present
+  tags:
+    - install
+
+- name: Add Datastax repository key
+  apt_key: url=http://debian.datastax.com/debian/repo_key state=present
+  tags:
+    - install
+
+- name: Add Datastax repository
+  apt_repository: repo='deb http://debian.datastax.com/community stable main' state=present update_cache=yes
+  tags:
+    - install
+
+- name: Install Cassandra
+  apt: name={{ item }} state=present
+  with_items:
+    - dsc20
+    - cassandra=2.0.11
+    - opscenter
+  tags:
+    - install
+
+- name: disable swap
+  shell: swapoff --all
+  tags:
+    - configure
+
+- name: set virtual memory
+  shell: >
+    echo "vm.max_map_count = 131072" >> /etc/sysctl.conf
+    sysctl -p
+  tags:
+    - configure
+
+- name: set up cassandra-env.sh
+  template: src=cassandra-env.sh.j2 dest=/etc/cassandra/cassandra-env.sh
+  tags:
+    - configure
+
+- name: set up cassandra.yaml
+  template: src=cassandra.yaml.j2 dest=/etc/cassandra/cassandra.yaml
+  tags:
+    - configure
+
+- name: make sure cassandra is started before bootstrapping
+  service: name=cassandra state=restarted
+  tags:
+    - configure
+
+

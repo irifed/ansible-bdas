@@ -1,0 +1,26 @@
+---
+- name: apply common configuration to all nodes
+  hosts: all
+  roles:
+    - common
+
+- name: set up host for convenience
+  hosts: all
+  roles:
+    - goodies
+
+- name: setup passwordless SSH for user root - donor key
+  hosts: master
+  roles:
+    - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
+
+- name: setup passwordless SSH for user root - accept key
+  hosts: workers
+  roles:
+    - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
+
+- name: install Cassandra
+  hosts: all
+  roles:
+    - cassandra
+

@@ -1,0 +1,59 @@
+- name: Install pre-uploaded Oracle Java rpm from S3
+  yum: name=http://oracle-jre.s3.amazonaws.com/jre-7u71-linux-x64.rpm state=present
+  tags:
+    - install
+
+- name: correct java version selected
+  alternatives: name=java link=/usr/bin/java path=/usr/java/jre1.7.0_71/bin/java
+  tags:
+    - install
+
+- name: Install JNA
+  yum: name=jna state=present
+  tags:
+    - install
+
+- name: Add Datastax repository
+  template: src=datastax.repo dest=/etc/yum.repos.d/datastax.repo
+  tags:
+    - install
+
+- name: Install Cassandra
+  yum: name={{ item }} state=present
+  with_items:
+    - dsc20
+    - cassandra20
+    - opscenter
+  tags:
+    - install
+  tags:
+    - configure
+
+- name: disable swap
+  shell: swapoff --all
+  tags:
+    - configure
+
+- name: set virtual memory
+  shell: >
+    echo "vm.max_map_count = 131072" >> /etc/sysctl.conf
+    sysctl -p
+  tags:
+    - configure
+
+- name: set up cassandra-env.sh
+  template: src=cassandra-env.sh.j2 dest=/etc/cassandra/conf/cassandra-env.sh
+  tags:
+    - configure
+
+- name: set up cassandra.yaml
+  template: src=cassandra.yaml.j2 dest=/etc/cassandra/conf/cassandra.yaml
+  tags:
+    - configure
+
+- name: make sure cassandra is started
+  service: name=cassandra state=restarted
+  tags:
+    - configure
+
+

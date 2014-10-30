@@ -1,0 +1,4 @@
+cassandra_cluster_name: "Test Cluster"
+# if use different name, make sure to update system.local table
+# on all nodes
+# http://stackoverflow.com/questions/22006887/cassandra-saved-cluster-name-test-cluster-configured-name
