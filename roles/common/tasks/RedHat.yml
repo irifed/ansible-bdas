@@ -1,6 +1,6 @@
 ---
-#- name: install the 'Development tools' package group
-#  yum: name="@Development tools" state=present
+- name: install the 'Development tools' package group
+  yum: name="@Development tools" state=present
 
 - name: install EPEL repository
   yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present 
