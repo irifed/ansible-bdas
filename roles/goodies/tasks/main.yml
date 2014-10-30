@@ -14,6 +14,9 @@
 - name: download tmux.conf
   get_url: url=https://raw.githubusercontent.com/irifed/dotfiles-pub/master/.tmux.conf dest={{ goodies_home }}/.tmux.conf
 
+- name: download screenrc
+  get_url: url=https://raw.githubusercontent.com/irifed/dotfiles-pub/master/.screenrc dest={{ goodies_home }}/.screenrc
+
 - name: install vim-scala module
   git: repo=https://github.com/derekwyatt/vim-scala.git dest={{ goodies_home }}/.vim/bundle/vim-scala
 
