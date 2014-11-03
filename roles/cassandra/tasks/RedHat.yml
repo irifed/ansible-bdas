@@ -24,11 +24,11 @@
     - dsc20
     - cassandra20
     - opscenter
+    - datastax-agent
   tags:
     - install
-  tags:
-    - configure
 
+# Basic configuration for Cassandra
 - name: disable swap
   shell: swapoff --all
   tags:
@@ -51,8 +51,16 @@
   tags:
     - configure
 
+- name: set up datastax agents
+  template: src=address.yaml.j2 dest=/var/lib/datastax-agent/conf/address.yaml
+
 - name: make sure cassandra is started
   service: name=cassandra state=restarted
+  tags:
+    - configure
+
+- name: start datastax-agent
+  service: name=datastax-agent state=restarted
   tags:
     - configure
 

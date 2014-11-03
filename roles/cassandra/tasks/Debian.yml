@@ -36,6 +36,7 @@
     - dsc20
     - cassandra=2.0.11
     - opscenter
+    - datastax-agent
   tags:
     - install
 
@@ -61,8 +62,16 @@
   tags:
     - configure
 
-- name: make sure cassandra is started before bootstrapping
+- name: set up datastax agents
+  template: src=address.yaml.j2 dest=/var/lib/datastax-agent/conf/address.yaml
+
+- name: make sure cassandra is started
   service: name=cassandra state=restarted
+  tags:
+    - configure
+
+- name: start datastax-agent
+  service: name=datastax-agent state=restarted
   tags:
     - configure
 
