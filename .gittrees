@@ -1,9 +1,0 @@
-[subtree "roles/sbt"]
-    url = https://github.com/AnsibleShipyard/ansible-sbt.git
-    path = roles/sbt
-    branch = master
-
-[subtree "roles/scala"]
-    url = https://github.com/AnsibleShipyard/ansible-scala.git
-    path = roles/scala
-    branch = master
