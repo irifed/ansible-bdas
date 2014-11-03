@@ -40,6 +40,7 @@
   tags:
     - install
 
+# Basic configuration for Cassandra
 - name: disable swap
   shell: swapoff --all
   tags:

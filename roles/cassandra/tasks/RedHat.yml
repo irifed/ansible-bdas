@@ -3,7 +3,7 @@
   tags:
     - install
 
-- name: correct java version selected
+- name: Make sure correct java version selected
   alternatives: name=java link=/usr/bin/java path=/usr/java/jre1.7.0_71/bin/java
   tags:
     - install
