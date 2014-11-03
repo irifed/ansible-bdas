@@ -15,6 +15,11 @@
   tags:
     - install
 
+- name: Make sure correct java version selected
+  alternatives: name=java link=/usr/bin/java path=/usr/lib/jvm/java-7-oracle/jre/bin/java
+  tags:
+    - install
+
 - name: Install JNA
   apt: name=libjna-java state=present
   tags:
