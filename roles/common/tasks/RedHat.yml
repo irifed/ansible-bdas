@@ -18,8 +18,11 @@
     - python-pycurl
     - libgfortran
     - python-pip
+    - nmon
+    - sockperf
+    - ifotop
+    - iotop
     # not available in CentOS
-    # - nmon
     # - python-swiftclient # can be installed from pip
   tags:
     - install
