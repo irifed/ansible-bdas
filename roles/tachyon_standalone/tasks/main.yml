@@ -2,6 +2,10 @@
 #- name: Download pre-build Tachyon package
 #  get_url: url={{ tachyon_download_url }} dest="/tmp/tachyon.tgz"
 
+- include_vars: group_vars/swift.yml
+  tags:
+    - install
+
 - name: Download custom build Tachyon package for CHD5 from SL swift
   shell: >
     cd /tmp;

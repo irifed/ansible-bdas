@@ -35,6 +35,10 @@
   tags:
     - configure
 
+- include_vars: group_vars/swift.yml
+  tags:
+    - install
+
 - name: Fix protobuf bug by replacing the hive-exec jar and removing 2.4.1 jar
   # https://groups.google.com/forum/#!topic/shark-users/0pGIVQvaYfo
   # it is very important not to change indentation in the long line below

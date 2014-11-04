@@ -1,0 +1,4 @@
+swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
+swift_user: "EDIT_HERE"
+swift_key: "EDIT_HERE"
+

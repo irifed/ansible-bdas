@@ -4,6 +4,10 @@
   tags: 
     - install
 
+- include_vars: group_vars/swift.yml
+  tags:
+    - install
+
 - name: Download AMPCamp wikistats dataset from SoftLayer Object Store
   # do not change indentation in the long line below
   shell: >
