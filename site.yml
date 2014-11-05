@@ -3,108 +3,128 @@
   hosts: all
   roles:
     - common
+  any_errors_fatal: yes
 
 - name: set up master host for convenience
   hosts: master
   roles:
     - goodies
+  any_errors_fatal: yes
 
 - name: create clusteruser user
   hosts: all
   roles:
     - clusteruser_common
+  any_errors_fatal: yes
 
 - name: setup passwordless SSH for clsteruser - donor key
   hosts: master
   roles: 
     - { role: sshkey_donor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+  any_errors_fatal: yes
 
 - name: setup passwordless SSH for clsteruser - accept key
   hosts: workers
   roles:
     - { role: sshkey_acceptor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+  any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - donor key
   hosts: master
   roles:
     - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
+  any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - accept key
   hosts: workers
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
+  any_errors_fatal: yes
 
 - name: install Java
   hosts: all
   roles:
     - java
+  any_errors_fatal: yes
 
 - name: install SBT
   hosts: master
   roles:
     - sbt
+  any_errors_fatal: yes
 
 - name: install Scala
   hosts: master
   roles:
     - scala
+  any_errors_fatal: yes
 
 - name: prepare for Hadoop installation
   hosts: all
   roles:
     - hadoop_common
+  any_errors_fatal: yes
 
 - name: setup HDFS namenode
   hosts: master
   roles:
     - hdfs_namenode
+  any_errors_fatal: yes
 
 - name: setup HDFS datanodes
   hosts: workers
   roles:
     - hdfs_datanode
+  any_errors_fatal: yes
 
 - name: deploy standalone Spark
   hosts: all
   roles:
     - spark_standalone
+  any_errors_fatal: yes
 
-- name: install Mesos
-  hosts: all
-  roles:
-    - mesos
-
-- name: start Mesos cluster
-  hosts: master
-  roles: 
-    - mesos_master
-
-- name: deploy Spark on Mesos
-  hosts: master
-  roles:
-    - spark_mesos
-
-- name: install mysql on Hive master
-  hosts: master
-  roles:
-    - mysql_server
-
-- name: install Hive
-  hosts: master
-  roles:
-    - hive
-
-#- name: deploy Shark on standalone Spark
+#- name: install Mesos
 #  hosts: all
 #  roles:
-#    - shark_standalone
-
-- name: deploy Tachyon
-  hosts: all
-  roles:
-      - tachyon_standalone
-
-# TODO deploy Hadoop MR1 on Mesos
-
-- include: tests/integration-tests.yml
+#    - mesos
+#  any_errors_fatal: yes
+#
+#- name: start Mesos cluster
+#  hosts: master
+#  roles: 
+#    - mesos_master
+#  any_errors_fatal: yes
+#
+#- name: deploy Spark on Mesos
+#  hosts: master
+#  roles:
+#    - spark_mesos
+#  any_errors_fatal: yes
+#
+#- name: install mysql on Hive master
+#  hosts: master
+#  roles:
+#    - mysql_server
+#  any_errors_fatal: yes
+#
+#- name: install Hive
+#  hosts: master
+#  roles:
+#    - hive
+#  any_errors_fatal: yes
+#
+##- name: deploy Shark on standalone Spark
+##  hosts: all
+##  roles:
+##    - shark_standalone
+#
+#- name: deploy Tachyon
+#  hosts: all
+#  roles:
+#      - tachyon_standalone
+#  any_errors_fatal: yes
+#
+## TODO deploy Hadoop MR1 on Mesos
+#
+#- include: tests/integration-tests.yml
 
