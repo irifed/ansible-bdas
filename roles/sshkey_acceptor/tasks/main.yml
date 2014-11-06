@@ -8,6 +8,13 @@
   tags:
     - configure
 
+- name: ensure proper permissions on SSH keys
+  file: path={{ clusteruser_home }}/.ssh/{{ item }} mode=0600
+  with_items:
+    - id_rsa
+    - id_rsa.pub
+    - authorized_keys
+
 - name: cleanup sshkeys
   local_action: command rm -rf sshkeys
   tags:
