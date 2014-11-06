@@ -83,48 +83,48 @@
     - spark_standalone
   any_errors_fatal: yes
 
-#- name: install Mesos
+- name: install Mesos
+  hosts: all
+  roles:
+    - mesos
+  any_errors_fatal: yes
+
+- name: start Mesos cluster
+  hosts: master
+  roles: 
+    - mesos_master
+  any_errors_fatal: yes
+
+- name: deploy Spark on Mesos
+  hosts: master
+  roles:
+    - spark_mesos
+  any_errors_fatal: yes
+
+- name: install mysql on Hive master
+  hosts: master
+  roles:
+    - mysql_server
+  any_errors_fatal: yes
+
+- name: install Hive
+  hosts: master
+  roles:
+    - hive
+  any_errors_fatal: yes
+
+#- name: deploy Shark on standalone Spark
 #  hosts: all
 #  roles:
-#    - mesos
-#  any_errors_fatal: yes
-#
-#- name: start Mesos cluster
-#  hosts: master
-#  roles: 
-#    - mesos_master
-#  any_errors_fatal: yes
-#
-#- name: deploy Spark on Mesos
-#  hosts: master
-#  roles:
-#    - spark_mesos
-#  any_errors_fatal: yes
-#
-#- name: install mysql on Hive master
-#  hosts: master
-#  roles:
-#    - mysql_server
-#  any_errors_fatal: yes
-#
-#- name: install Hive
-#  hosts: master
-#  roles:
-#    - hive
-#  any_errors_fatal: yes
-#
-##- name: deploy Shark on standalone Spark
-##  hosts: all
-##  roles:
-##    - shark_standalone
-#
-#- name: deploy Tachyon
-#  hosts: all
-#  roles:
-#      - tachyon_standalone
-#  any_errors_fatal: yes
-#
-## TODO deploy Hadoop MR1 on Mesos
-#
-#- include: tests/integration-tests.yml
+#    - shark_standalone
+
+- name: deploy Tachyon
+  hosts: all
+  roles:
+      - tachyon_standalone
+  any_errors_fatal: yes
+
+# TODO deploy Hadoop MR1 on Mesos
+
+- include: tests/integration-tests.yml
 
