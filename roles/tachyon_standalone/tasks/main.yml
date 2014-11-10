@@ -7,11 +7,7 @@
     - install
 
 - name: Download custom build Tachyon package for CHD5 from SL swift
-  shell: >
-    cd /tmp;
-    swift -A {{ swift_api_url }} 
-    -U {{ swift_user }} -K {{ swift_key }} 
-    download {{ bdas_container }} {{ tachyon_download_url }}  
+  get_url: url=http://10abe.http.sjc01.cdn.softlayer.net/ampcamp-data/tachyon-0.5.0-hadoop2.3.tgz dest="/tmp/tachyon-0.5.0-hadoop2.3.tgz"
   tags:
     - install
 
