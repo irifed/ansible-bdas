@@ -14,7 +14,7 @@
     if [ ! -d /{{ ampcamp_container }}/{{ item }} ]; then 
     cd /{{ ampcamp_container }};
     swift -A {{ swift_api_url }} 
-    -U {{ swift_user }} -K {{ swift_key }} 
+    -U "IBMOS278184-17:"{{ swift_user }} -K {{ swift_key }} 
     download {{ ampcamp_container }} --prefix {{ item }}; 
     fi 
   with_items:
