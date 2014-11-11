@@ -39,6 +39,7 @@
 
 - name: Attempt to start Spark cluster  
   shell: "{{ spark_root }}/sbin/start-all.sh"
+  when: ansible_hostname == "master"
   ignore_errors: true
   tags:
     - configure
