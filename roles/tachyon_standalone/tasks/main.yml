@@ -1,18 +1,10 @@
 --- 
-#- name: Download pre-build Tachyon package
-#  get_url: url={{ tachyon_download_url }} dest="/tmp/tachyon.tgz"
-
-- include_vars: group_vars/swift.yml
-  tags:
-    - install
-
 - name: Download custom build Tachyon package for CHD5 from SL swift
   get_url: url=http://10abe.http.sjc01.cdn.softlayer.net/ampcamp-data/tachyon-0.5.0-hadoop2.3.tgz dest="/tmp/tachyon-0.5.0-hadoop2.3.tgz"
   tags:
     - install
 
 - name: Extract Tachyon archive
-  # unarchive: copy=no src="/tmp/tachyon.tgz" dest=/opt/
   unarchive: copy=no src="/tmp/{{ tachyon_download_url }}" dest=/opt/
   tags:
     - install
