@@ -1,18 +1,18 @@
-val pagecounts = sc.textFile("/wiki/pagecounts")
-//pagecounts.take(10)
-//pagecounts.take(10).foreach(println)
-pagecounts.count
-val enPages = pagecounts.filter(_.split(" ")(1) == "en").cache
-enPages.count
-//val enTuples = enPages.map(line => line.split(" "))
-//val enKeyValuePairs = enTuples.map(line => (line(0).substring(0, 8), line(3).toInt))
-//enKeyValuePairs.reduceByKey(_+_, 1).collect
-//enPages.map(l => l.split(" ")).map(l => (l(2), l(3).toInt)).reduceByKey(_+_, 40).filter(x => x._2 > 200000).map(x => (x._2, x._1)).collect.foreach(println)
+// perform some simple operations and check if we did not have an exception
 
+try {
+  // do not forget to put this file to HDFS
+  val textFile = sc.textFile("/README.md")
+  textFile.count()
 
-// val sqlContext = new org.apache.spark.sql.SQLContext(sc)
-// import sqlContext.createSchemaRDD
+  val linesWithSpark = textFile.filter(line => line.contains("Spark"))
+  linesWithSpark.cache()
+  linesWithSpark.count()
 
-println("PASSED")
+  println("PASSED")
+} catch {
+  case  _: Throwable => { println("FAILED") }
+}
+
 exit()
 
