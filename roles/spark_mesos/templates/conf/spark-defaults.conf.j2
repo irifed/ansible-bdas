@@ -9,3 +9,6 @@
 
 # increase if you see out-of-memory exceptions in spark shell
 spark.executor.memory   {{ spark_executor_memory }}
+
+spark.serializer        org.apache.spark.serializer.KryoSerializer
+spark.executor.extraClassPath "{{ tachyon_root }}/client/target/tachyon-client-0.5.0-jar-with-dependencies.jar"
