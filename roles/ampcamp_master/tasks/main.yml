@@ -33,10 +33,10 @@
 - name: Put AMPCamp data from /ampcamp-data to HDFS
   shell: >
     su - {{ hdfsuser }} -c "hadoop fs -mkdir -p /wiki/pagecounts";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wikistats_20090505-01/* /wiki/pagecounts/";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wikistats_20090505_restricted-01 /";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/wiki_links /";
-    su - {{ hdfsuser }} -c "hadoop fs -put /{{ ampcamp_container }}/movielens /";
+    su - {{ hdfsuser }} -c "hadoop fs -put -f /{{ ampcamp_container }}/wikistats_20090505-01/* /wiki/pagecounts/";
+    su - {{ hdfsuser }} -c "hadoop fs -put -f /{{ ampcamp_container }}/wikistats_20090505_restricted-01 /";
+    su - {{ hdfsuser }} -c "hadoop fs -put -f /{{ ampcamp_container }}/wiki_links /";
+    su - {{ hdfsuser }} -c "hadoop fs -put -f /{{ ampcamp_container }}/movielens /";
   # ignore errors if already exists
   ignore_errors: true
   tags:
