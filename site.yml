@@ -79,38 +79,42 @@
 
 - name: deploy standalone Spark
   hosts: all
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - spark_standalone
+    - { role: spark_standalone, when: install_spark }
   any_errors_fatal: yes
 
 - name: install Mesos
   hosts: all
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - mesos
-  any_errors_fatal: yes
-
-- name: start Mesos cluster
-  hosts: master
-  roles: 
-    - mesos_master
+    - { role: mesos, when: install_mesos }
   any_errors_fatal: yes
 
 - name: deploy Spark on Mesos
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - spark_mesos
+    - { role: spark_mesos, when: install_mesos }
   any_errors_fatal: yes
 
 - name: install mysql on Hive master
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - mysql_server
+    - { role: mysql_server, when: install_hive }
   any_errors_fatal: yes
 
 - name: install Hive
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - hive
+    - { role: hive, when: install_hive }
   any_errors_fatal: yes
 
 #- name: deploy Shark on standalone Spark
@@ -120,8 +124,10 @@
 
 - name: deploy Tachyon
   hosts: all
+  vars_files:
+    - group_vars/components.yml
   roles:
-      - tachyon_standalone
+    - { role: tachyon_standalone, when: install_tachyon }
   any_errors_fatal: yes
 
 # TODO deploy Hadoop MR1 on Mesos

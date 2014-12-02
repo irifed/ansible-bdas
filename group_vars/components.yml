@@ -1,0 +1,7 @@
+install_spark: true
+install_mesos: false
+install_mpi: false
+install_mapred: false
+install_hive: false
+install_tachyon: false
+install_cassandra: false

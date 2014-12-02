@@ -41,3 +41,9 @@
   tags:
     - configure
 
+- name: start Mesos cluster
+  command: "{{ mesos_install_prefix }}/sbin/mesos-start-cluster.sh"
+  when: ansible_hostname == "master"
+  ignore_errors: true
+  tags:
+    - configure
