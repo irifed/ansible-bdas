@@ -41,6 +41,27 @@
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
 
+- name: setup nfs master
+  hosts: master
+  vars_files:
+    - group_vars/components.yml
+  roles: 
+    - { role: nfs_server, when: install_mpi }
+
+- name: setup nfs clients
+  hosts: workers
+  vars_files:
+    - group_vars/components.yml
+  roles: 
+    - { role: nfs_client, when: install_mpi }
+
+- name: setup mpi cluster
+  hosts: all
+  vars_files:
+    - group_vars/components.yml
+  roles:
+    - { role: openmpi, when: install_mpi }
+
 - name: install Java
   hosts: all
   roles:
