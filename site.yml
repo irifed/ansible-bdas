@@ -153,5 +153,13 @@
 
 # TODO deploy Hadoop MR1 on Mesos
 
+- name: install Cassandra
+  hosts: all
+  vars_files:
+    - group_vars/components.yml
+  roles:
+    - { role: cassandra, when: install_cassandra }
+
+
 - include: tests/integration-tests.yml
 
