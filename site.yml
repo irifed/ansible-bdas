@@ -64,38 +64,42 @@
 
 - name: install Java
   hosts: all
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - java
+    - { role: java, when: install_mapred or install_spark or install_hive or install_cassandra }
   any_errors_fatal: yes
 
 - name: install SBT
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - sbt
+    - { role: sbt, when: install_spark }
   any_errors_fatal: yes
 
 - name: install Scala
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - scala
-  any_errors_fatal: yes
-
-- name: prepare for Hadoop installation
-  hosts: all
-  roles:
-    - hadoop_common
+    - { role: scala, when: install_spark }
   any_errors_fatal: yes
 
 - name: setup HDFS namenode
   hosts: master
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - hdfs_namenode
+    - { role: hdfs_namenode, when: install_spark or install_mapred }
   any_errors_fatal: yes
 
 - name: setup HDFS datanodes
   hosts: workers
+  vars_files:
+    - group_vars/components.yml
   roles:
-    - hdfs_datanode
+    - { role: hdfs_datanode, when: install_spark or install_mapred }
   any_errors_fatal: yes
 
 - name: deploy standalone Spark
@@ -159,7 +163,6 @@
     - group_vars/components.yml
   roles:
     - { role: cassandra, when: install_cassandra }
-
 
 - include: tests/integration-tests.yml
 
