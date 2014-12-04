@@ -91,7 +91,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: hdfs_namenode, when: install_spark or install_mapred }
+    - { role: hdfs_namenode, when: install_spark or install_mapred or install_mesos }
   any_errors_fatal: yes
 
 - name: setup HDFS datanodes
@@ -99,7 +99,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: hdfs_datanode, when: install_spark or install_mapred }
+    - { role: hdfs_datanode, when: install_spark or install_mapred or install_mesos }
   any_errors_fatal: yes
 
 - name: deploy standalone Spark
