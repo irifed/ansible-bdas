@@ -107,7 +107,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: spark_standalone, when: install_spark }
+    - { role: spark_standalone, when: install_spark or install_mesos }
   any_errors_fatal: yes
 
 - name: install Mesos
