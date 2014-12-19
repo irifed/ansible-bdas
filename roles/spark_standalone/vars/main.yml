@@ -1,6 +1,6 @@
 ---
 #spark_version: "0.9.2-bin-hadoop2"
-spark_version: "1.1.0-bin-hadoop2.3"
+spark_version: "1.2.0-bin-hadoop2.4"
 spark_download_url: "http://d3kbcqa49mib13.cloudfront.net/spark-{{ spark_version }}.tgz"
 
 spark_root: "/opt/spark"
