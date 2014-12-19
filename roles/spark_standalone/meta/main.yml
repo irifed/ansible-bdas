@@ -1,6 +1,3 @@
 ---
 dependencies:
   - { role: java }
-    # these deps should be applied to different hosts
-    # - { role: hdfs_datanode }
-    # - { role: hdfs_namenode }

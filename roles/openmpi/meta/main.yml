@@ -1,5 +1,0 @@
----
-dependencies:
-  # these deps should be applied to different hosts
-  #- { role: nfs_server }
-  #- { role: nfs_client }

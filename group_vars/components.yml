@@ -1,5 +1,5 @@
-install_spark: false
-install_mesos: false
+install_spark: true
+install_mesos: true
 install_mpi: false
 install_mapred: false
 install_hive: false
