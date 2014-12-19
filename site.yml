@@ -11,7 +11,7 @@
     - goodies
   any_errors_fatal: yes
 
-- name: create clusteruser user
+- name: create non-root clusteruser user
   hosts: all
   roles:
     - clusteruser_common
@@ -62,14 +62,6 @@
   roles:
     - { role: openmpi, when: install_mpi }
 
-- name: install Java
-  hosts: all
-  vars_files:
-    - group_vars/components.yml
-  roles:
-    - { role: java, when: install_mapred or install_spark or install_hive or install_cassandra }
-  any_errors_fatal: yes
-
 - name: install SBT
   hosts: master
   vars_files:
@@ -91,7 +83,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: hdfs_namenode, when: install_spark or install_mapred or install_mesos }
+    - { role: hdfs_namenode, when: install_spark or install_mapred or install_mesos or install_tachyon }
   any_errors_fatal: yes
 
 - name: setup HDFS datanodes
@@ -99,7 +91,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: hdfs_datanode, when: install_spark or install_mapred or install_mesos }
+    - { role: hdfs_datanode, when: install_spark or install_mapred or install_mesos or install_tachyon }
   any_errors_fatal: yes
 
 - name: deploy standalone Spark
@@ -107,7 +99,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: spark_standalone, when: install_spark or install_mesos }
+    - { role: spark_standalone, when: install_spark }
   any_errors_fatal: yes
 
 - name: install Mesos
@@ -123,7 +115,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: spark_mesos, when: install_mesos }
+    - { role: spark_mesos, when: install_mesos and install_spark }
   any_errors_fatal: yes
 
 - name: install mysql on Hive master
@@ -141,11 +133,6 @@
   roles:
     - { role: hive, when: install_hive }
   any_errors_fatal: yes
-
-#- name: deploy Shark on standalone Spark
-#  hosts: all
-#  roles:
-#    - shark_standalone
 
 - name: deploy Tachyon
   hosts: all
