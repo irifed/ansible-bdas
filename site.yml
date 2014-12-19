@@ -20,13 +20,13 @@
 - name: setup passwordless SSH for clusteruser - donor key
   hosts: master
   roles: 
-    - { role: sshkey_donor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+    - { role: sshkey_donor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for clusteruser - accept key
   hosts: workers
   roles:
-    - { role: sshkey_acceptor, clusteruser: "{{ clusteruser }}", clusteruser_home: "/home/{{ clusteruser }}" }
+    - { role: sshkey_acceptor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - donor key
