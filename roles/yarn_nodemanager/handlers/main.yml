@@ -1,0 +1,5 @@
+
+# Handlers for the hadoop master services
+
+- name: restart hadoop worker services
+  service: name=hadoop-yarn-nodemanager state=restarted

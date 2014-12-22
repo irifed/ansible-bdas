@@ -1,0 +1,6 @@
+
+# Handlers for the hadoop master services
+
+- name: restart hadoop master services
+  service: name=hadoop-yarn-resourcemanager state=restarted
+  # TODO history server, proxyserver

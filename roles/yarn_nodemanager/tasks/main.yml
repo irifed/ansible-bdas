@@ -1,0 +1,23 @@
+---
+- name: Install the Resource manager packages
+  apt: name={{ item }} state=installed
+  with_items: 
+    - hadoop-yarn-nodemanager
+    - hadoop-mapreduce
+  tags:
+    - install
+
+- include_vars: roles/hadoop_common/vars/main.yml
+  tags:
+    - configure
+
+- name: Copy the hadoop configuration files
+  template: src=roles/hadoop_common/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
+  with_items: 
+   - core-site.xml
+   - hdfs-site.xml
+   - slaves
+  notify: restart hadoop worker services
+  tags:
+    - configure
+

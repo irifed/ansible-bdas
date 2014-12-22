@@ -142,7 +142,21 @@
     - { role: tachyon_standalone, when: install_tachyon }
   any_errors_fatal: yes
 
-# TODO deploy Hadoop MR1 on Mesos
+- name: setup YARN resourcemanager
+  hosts: master
+  vars_files:
+    - group_vars/components.yml
+  roles:
+    - { role: yarn_resourcemanager, when: install_mapred }
+  any_errors_fatal: yes
+
+- name: setup YARN nodemanagers
+  hosts: workers
+  vars_files:
+    - group_vars/components.yml
+  roles:
+    - { role: when: install_mapred }
+  any_errors_fatal: yes
 
 - name: install Cassandra
   hosts: all
