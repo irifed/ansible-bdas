@@ -16,7 +16,7 @@
    - core-site.xml
    - hdfs-site.xml
    - slaves
-  notify: restart hadoop master services
+  notify: restart HDFS master services
   tags:
     - configure
 
