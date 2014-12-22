@@ -1,4 +1,8 @@
 # Spark slaves list
+
+# v0.5 requires worker to be started on master too 
+{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}
+
 {% for host in groups.workers %}
 {{ hostvars[host]['ansible_' + iface]['ipv4']['address'] }}
 {% endfor %}
