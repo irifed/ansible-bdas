@@ -1,3 +1,3 @@
 ---
 dependencies:
-  - { role: hadoop-common }
+  - { role: hadoop_common }
