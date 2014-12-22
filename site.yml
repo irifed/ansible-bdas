@@ -155,7 +155,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: when: install_mapred }
+    - { role: yarn_nodemanager, when: install_mapred }
   any_errors_fatal: yes
 
 - name: install Cassandra
