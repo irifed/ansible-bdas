@@ -18,7 +18,7 @@
   tags:
     - configure
 
-- include_vars: roles/tachyon_standalone/vars/main.yml
+- include_vars: roles/tachyon/vars/main.yml
   tags:
     - configure
 

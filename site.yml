@@ -139,7 +139,7 @@
   vars_files:
     - group_vars/components.yml
   roles:
-    - { role: tachyon_standalone, when: install_tachyon }
+    - { role: tachyon, when: install_tachyon }
   any_errors_fatal: yes
 
 - name: setup YARN resourcemanager
