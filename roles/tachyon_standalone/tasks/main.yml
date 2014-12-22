@@ -1,11 +1,47 @@
 --- 
+#- name: Download vanilla Tachyon 
+#  get_url: url=https://github.com/amplab/tachyon/releases/download/v0.5.0/tachyon-0.5.0-bin.tar.gz dest="/tmp/tachyon-0.5.0-bin.tar.gz"
+#  tags:
+#    - build 
+#
+#- name: Extract Tachyon archive
+#  unarchive: copy=no src="/tmp/tachyon-0.5.0-bin.tar.gz" dest=/opt/
+#  tags:
+#    - build 
+#
+#- name: Install Maven to build Tachyon with current Hadoop
+#  apt: name=maven state=present
+#  tags:
+#    - build 
+#
+#- name: Build Tachyon
+#  shell: >
+#    cd /opt/tachyon-0.5/; 
+#    mvn -Dhadoop.version=2.5.0 clean package;
+#    cd ..;
+#    mv tachyon-0.5 "tachyon-{{ tachyon_version }}"
+#  tags:
+#    - build 
+#
+#- name: Create archive
+#  archive: src="/opt/tachyon-{{ tachyon_version }}" dest="/tmp/{{ tachyon_archive_name }}"
+#  tags:
+#    - build 
+#
+#- name: Upload pre-built Tachyon Archive to SL Object Storage
+#  shell: >
+#    swift -A {{ swift_api_url }} 
+#    -U "IBMOS278184-17:"{{ swift_user }} -K {{ swift_key }} upload bdas /tmp/{{ tachyon_archive_name }}  
+#    tags:
+#    - build 
+
 - name: Download custom build Tachyon package for CHD5 from SL swift
-  get_url: url=http://10abe.http.sjc01.cdn.softlayer.net/ampcamp-data/tachyon-0.5.0-hadoop2.3.tgz dest="/tmp/tachyon-0.5.0-hadoop2.3.tgz"
+  get_url: url={{ tachyon_download_url }} dest="/tmp/{{ tachyon_archive_name }}"
   tags:
     - install
 
 - name: Extract Tachyon archive
-  unarchive: copy=no src="/tmp/{{ tachyon_download_url }}" dest=/opt/
+  unarchive: copy=no src="/tmp/{{ tachyon_archive_name }}" dest=/opt/
   tags:
     - install
 
