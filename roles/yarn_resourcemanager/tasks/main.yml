@@ -1,4 +1,7 @@
 ---
+# NOT FINISHED
+# http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cdh_ig_yarn_cluster_deploy.html
+
 - name: Install the Resource manager packages
   apt: name={{ item }} state=installed
   with_items: 
@@ -13,11 +16,9 @@
     - configure
 
 - name: Copy the hadoop configuration files
-  template: src=roles/hadoop_common/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
+  template: src=roles/yarn_resourcemanager/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
   with_items: 
-   - core-site.xml
-   - hdfs-site.xml
-   - slaves
+    - mapred-site.xml
   notify: restart hadoop master services
   tags:
     - configure
