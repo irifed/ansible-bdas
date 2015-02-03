@@ -1,0 +1,12 @@
+# hosts-csdev-3
+
+master ansible_ssh_host=10.0.2.4 ansible_ssh_port=22
+host1 ansible_ssh_host=10.0.2.215 ansible_ssh_port=22
+host2 ansible_ssh_host=10.0.2.214 ansible_ssh_port=22
+
+[master]
+master
+
+[workers]
+host1
+host2

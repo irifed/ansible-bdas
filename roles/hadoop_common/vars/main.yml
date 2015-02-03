@@ -1,6 +1,7 @@
 ---
 # CDH5 runs HDFS services as user 'hdfs' by default
-hdfsuser: "hdfs"
+# promote hdfsuser to group_vars/all, required by integration test
+#hdfsuser: "hdfs"
 hadoopgroup: "hadoop"
 
 # based on https://github.com/bennojoy/ansible_examples/

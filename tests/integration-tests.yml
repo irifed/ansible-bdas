@@ -7,11 +7,11 @@
   tasks:
       - name: put Spark test to master node
         when: install_spark
-        copy: src={{ test1 }} dest=/root/{{ test1 }}
+        copy: src={{ test1 }} dest={{master_home}}/{{ test1 }}
 
       - name: put data file to HDFS
         when: install_spark
-        shell: su - {{ hdfsuser }} -c "hadoop fs -put -f /opt/spark/README.md /"
+        shell: su - {{ hdfsuser }} -c "hdfs dfs -put /opt/spark/README.md /tmp/README.md"
 
       - include_vars: ../group_vars/all
       - include_vars: ../roles/spark_standalone/vars/main.yml

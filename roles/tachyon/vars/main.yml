@@ -6,7 +6,8 @@
 tachyon_version: "0.5.0-cdh5"
 tachyon_download_url: "https://sjc01.objectstorage.softlayer.net/v1/AUTH_c10e0c71-4804-4b95-a3a2-37584d559fca/bdas/tachyon-0.5.0-cdh5.tar.gz"
 tachyon_archive_name: "tachyon-{{ tachyon_version }}.tgz"
-tachyon_root: "/opt/tachyon"
+# promoted tachyon_roor to group_vars/all
+#tachyon_root: "/opt/tachyon"
 tachyon_master_host: "{{ master_hostname }}"
 tachyon_underfs_address: "hdfs://{{ hdfs_namenode_host }}:{{ hdfs_defaultFS_port }}"
 

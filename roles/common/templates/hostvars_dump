@@ -1,0 +1,16 @@
+{{hostvars}}
+
+***************************
+{{ hostvars.keys() }}
+
+************************
+
+{% for host in groups['all'] %}
+{{hostvars[host].keys() }}
+{% endfor %}
+
+******************************
+
+{% for host in groups.all %}
+{{ host }}
+{% endfor %}
