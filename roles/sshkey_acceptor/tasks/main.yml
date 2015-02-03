@@ -19,4 +19,5 @@
   local_action: command rm -rf sshkeys
   tags:
     - configure
+  sudo: no
   

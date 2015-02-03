@@ -1,0 +1,20 @@
+
+
+# ec2_hosts
+
+[tag_Name_modena:children]
+tag_role_worker
+tag_role_master
+
+[tag_role_worker]
+# filled by dynamic inventory ec2.py
+
+[tag_role_master]
+# filled by dynamic inventory ec2.py
+
+[workers:children]
+tag_role_worker
+
+
+[master:children]
+tag_role_worker

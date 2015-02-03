@@ -1,0 +1,4 @@
+swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
+swift_user: "{{lookup('env','SWIFT_USER')}}"
+swift_key: "{{lookup('env','SWIFT_KEY')}}"
+

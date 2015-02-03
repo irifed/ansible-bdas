@@ -50,6 +50,10 @@
   tags:
     - install
 
+# include_vars prevents you from over-riding using regular ansible mechanisms
+# only use it for things that will never be over-ridden
+# Alternatives are to make hadoop_common a dependency via meta/main.yml 
+# or promote the required vars to group_vars/all to make them global
 - include_vars: roles/hadoop_common/vars/main.yml
   tags:
     - configure

@@ -6,6 +6,7 @@ export SPARK_MASTER_PORT={{ spark_master_port }}
 export SPARK_WORKER_MEMORY={{ spark_worker_memory }}
 export HADOOP_CONF_DIR={{ conf_dir }}
 
+export SPARK_MASTER_OPTS="-Dspark.deploy.defaultCores={{spark_standalone_default_cores}}"
 # options for running under mesos
 export MESOS_NATIVE_LIBRARY={{ mesos_install_prefix }}/lib/libmesos.so
 export SPARK_EXECUTOR_URI=hdfs://{{ hdfs_namenode_host }}/tmp/spark-{{ spark_version }}.tgz

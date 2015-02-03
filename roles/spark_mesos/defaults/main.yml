@@ -1,0 +1,5 @@
+---
+
+# main.yml
+
+spark_mesos_default_cores: 1

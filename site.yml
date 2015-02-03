@@ -1,47 +1,63 @@
 ---
+
+- name: gather facts
+  hosts: all
+  gather_facts: yes
+  tasks:
+   - group_by: key={{ansible_os_family}}
+   - debug: msg="{{groups}}"
+
 - name: apply common configuration to all nodes
+  sudo: yes
   hosts: all
   roles:
     - common
   any_errors_fatal: yes
 
 - name: set up master host for convenience
+  sudo: yes
   hosts: master
   roles:
     - goodies
   any_errors_fatal: yes
 
 - name: create non-root clusteruser user
+  sudo: yes
   hosts: all
   roles:
     - clusteruser_common
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for clusteruser - donor key
+  sudo: yes
   hosts: master
   roles: 
     - { role: sshkey_donor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for clusteruser - accept key
-  hosts: workers
+  sudo: yes
+  hosts: worker
   roles:
     - { role: sshkey_acceptor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - donor key
+  sudo: yes
   hosts: master
   roles:
     - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - accept key
-  hosts: workers
+  sudo: yes
+  hosts: worker
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
 
 - name: setup nfs master
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -49,13 +65,15 @@
     - { role: nfs_server, when: install_mpi }
 
 - name: setup nfs clients
-  hosts: workers
+  sudo: yes
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles: 
     - { role: nfs_client, when: install_mpi }
 
 - name: setup mpi cluster
+  sudo: yes
   hosts: all
   vars_files:
     - group_vars/components.yml
@@ -63,6 +81,7 @@
     - { role: openmpi, when: install_mpi }
 
 - name: install SBT
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -71,6 +90,7 @@
   any_errors_fatal: yes
 
 - name: install Scala
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -79,6 +99,7 @@
   any_errors_fatal: yes
 
 - name: setup HDFS namenode
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -87,7 +108,8 @@
   any_errors_fatal: yes
 
 - name: setup HDFS datanodes
-  hosts: workers
+  sudo: yes
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles:
@@ -95,6 +117,7 @@
   any_errors_fatal: yes
 
 - name: deploy standalone Spark
+  sudo: yes
   hosts: all
   vars_files:
     - group_vars/components.yml
@@ -103,6 +126,7 @@
   any_errors_fatal: yes
 
 - name: install Mesos
+  sudo: yes
   hosts: all
   vars_files:
     - group_vars/components.yml
@@ -111,6 +135,7 @@
   any_errors_fatal: yes
 
 - name: deploy Spark on Mesos
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -119,6 +144,7 @@
   any_errors_fatal: yes
 
 - name: install mysql on Hive master
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -127,6 +153,7 @@
   any_errors_fatal: yes
 
 - name: install Hive
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -135,6 +162,7 @@
   any_errors_fatal: yes
 
 - name: deploy Tachyon
+  sudo: yes
   hosts: all
   vars_files:
     - group_vars/components.yml
@@ -143,6 +171,7 @@
   any_errors_fatal: yes
 
 - name: setup YARN resourcemanager
+  sudo: yes
   hosts: master
   vars_files:
     - group_vars/components.yml
@@ -151,7 +180,8 @@
   any_errors_fatal: yes
 
 - name: setup YARN nodemanagers
-  hosts: workers
+  sudo: yes
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles:
@@ -159,6 +189,7 @@
   any_errors_fatal: yes
 
 - name: install Cassandra
+  sudo: yes
   hosts: all
   vars_files:
     - group_vars/components.yml
@@ -166,4 +197,6 @@
     - { role: cassandra, when: install_cassandra }
 
 - include: tests/integration-tests.yml
+
+
 
