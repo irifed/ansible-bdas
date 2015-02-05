@@ -2,9 +2,11 @@
 
 iface: eth0
 
-master_ip: "{{ hostvars[groups[master_tag][0]]['ansible_' + iface]['ipv4']['address'] }}"
-master_fqdn: "{{ hostvars[groups[master_tag][0]]['ansible_fqdn'] }}"
-master_hostname: "{{ hostvars[groups[master_tag][0]]['ansible_hostname'] }}"
+
+master_ip: "{{ hostvars[groups[master][0]]['ansible_' + iface]['ipv4']['address'] }}"
+master_fqdn: "{{ hostvars[groups[master][0]]['ansible_fqdn'] }}"
+# A little indirect, but this is general enough to work across cloud providers if we put the line below in each providers deploy_vars
+master_hostname: "{{ hostvars[groups[master][0]]['ansible_hostname'] }}"
 master_home: /home/ubuntu
 
 clusteruser: "hadoop"
@@ -18,5 +20,3 @@ tachyon_root: "/opt/tachyon"
 # integration test requires this
 hdfsuser: "hdfs"
 
-master_tag: tag_role_master
-worker_tag: tag_role_worker
