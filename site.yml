@@ -6,8 +6,6 @@
   tasks:
    - group_by: key={{ansible_os_family}}
    - debug: msg="{{groups}}"
-   - debug: msg="{{ansible_hostname}}"
-   #- debug: msg="{{hostvars['10.0.100.193']}}"
 
 - name: apply common configuration to all nodes
   sudo: yes
@@ -18,7 +16,7 @@
 
 - name: set up master host for convenience
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   roles:
     - goodies
   any_errors_fatal: yes
@@ -32,35 +30,35 @@
 
 - name: setup passwordless SSH for clusteruser - donor key
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   roles: 
     - { role: sshkey_donor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for clusteruser - accept key
   sudo: yes
-  hosts: "{{worker_tag}}"
+  hosts: worker
   roles:
     - { role: sshkey_acceptor }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - donor key
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   roles:
     - { role: sshkey_donor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
 
 - name: setup passwordless SSH for user root - accept key
   sudo: yes
-  hosts: "{{worker_tag}}"
+  hosts: worker
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
 
 - name: setup nfs master
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles: 
@@ -68,7 +66,7 @@
 
 - name: setup nfs clients
   sudo: yes
-  hosts: "{{worker_tag}}"
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles: 
@@ -84,7 +82,7 @@
 
 - name: install SBT
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -93,7 +91,7 @@
 
 - name: install Scala
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -102,7 +100,7 @@
 
 - name: setup HDFS namenode
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -111,7 +109,7 @@
 
 - name: setup HDFS datanodes
   sudo: yes
-  hosts: "{{worker_tag}}"
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles:
@@ -138,7 +136,7 @@
 
 - name: deploy Spark on Mesos
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -147,7 +145,7 @@
 
 - name: install mysql on Hive master
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -156,7 +154,7 @@
 
 - name: install Hive
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -174,7 +172,7 @@
 
 - name: setup YARN resourcemanager
   sudo: yes
-  hosts: "{{master_tag}}"
+  hosts: master
   vars_files:
     - group_vars/components.yml
   roles:
@@ -183,7 +181,7 @@
 
 - name: setup YARN nodemanagers
   sudo: yes
-  hosts: "{{worker_tag}}"
+  hosts: worker
   vars_files:
     - group_vars/components.yml
   roles:
