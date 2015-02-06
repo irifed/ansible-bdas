@@ -28,7 +28,7 @@
       - name: run Spark test
         when: install_spark
         sudo: yes
-        shell: "{{ spark_root }}/bin/spark-shell --master spark://{{ spark_master_host }}:{{ spark_master_port }} -i:/root/{{ test1 }}"
+        shell: "sudo su - -c '{{ spark_home }}/bin/spark-shell --master spark://{{ spark_master_host }}:{{ spark_master_port }} -i:{{master_home}}//{{ test1 }}'"
         register: spark_shell_out
         failed_when: "'PASSED' not in spark_shell_out.stdout"
 
