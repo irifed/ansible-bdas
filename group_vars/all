@@ -3,10 +3,10 @@
 iface: eth0
 
 
-master_ip: "{{ hostvars[groups[master][0]]['ansible_' + iface]['ipv4']['address'] }}"
-master_fqdn: "{{ hostvars[groups[master][0]]['ansible_fqdn'] }}"
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}"
+master_fqdn: "{{ hostvars[groups['master'][0]]['ansible_fqdn'] }}"
 # A little indirect, but this is general enough to work across cloud providers if we put the line below in each providers deploy_vars
-master_hostname: "{{ hostvars[groups[master][0]]['ansible_hostname'] }}"
+master_hostname: "{{ hostvars[groups['master'][0]]['ansible_hostname'] }}"
 master_home: /home/ubuntu
 
 clusteruser: "hadoop"

@@ -9,15 +9,25 @@
         when: install_spark
         copy: src={{ test1 }} dest={{master_home}}/{{ test1 }}
 
+      - name: check if test file exists
+        when: install_spark
+        shell: su - {{ hdfsuser }} -c "hdfs dfs -ls /tmp/README.md"
+        sudo: yes
+        register: reg_dfs_ls
+
       - name: put data file to HDFS
         when: install_spark
         shell: su - {{ hdfsuser }} -c "hdfs dfs -put /opt/spark/README.md /tmp/README.md"
+        sudo: yes
+        when: reg_dfs_ls.stdout.find('No such file or directory') != -1
 
+      # include_vars destroys the precedence heirarchy
       - include_vars: ../group_vars/all
       - include_vars: ../roles/spark_standalone/vars/main.yml
 
       - name: run Spark test
         when: install_spark
+        sudo: yes
         shell: "{{ spark_root }}/bin/spark-shell --master spark://{{ spark_master_host }}:{{ spark_master_port }} -i:/root/{{ test1 }}"
         register: spark_shell_out
         failed_when: "'PASSED' not in spark_shell_out.stdout"

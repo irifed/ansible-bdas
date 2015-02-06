@@ -197,7 +197,6 @@
     - { role: cassandra, when: install_cassandra }
 
 - include: tests/integration-tests.yml
-  tags:
-    - integration_tests
+
 
 
