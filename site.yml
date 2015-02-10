@@ -37,7 +37,7 @@
 
 - name: setup passwordless SSH for clusteruser - accept key
   sudo: yes
-  hosts: worker
+  hosts: workers
   roles:
     - { role: sshkey_acceptor }
   any_errors_fatal: yes
@@ -51,7 +51,7 @@
 
 - name: setup passwordless SSH for user root - accept key
   sudo: yes
-  hosts: worker
+  hosts: workers
   roles:
     - { role: sshkey_acceptor, clusteruser: root, clusteruser_home: '/root' }
   any_errors_fatal: yes
@@ -59,32 +59,24 @@
 - name: setup nfs master
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles: 
     - { role: nfs_server, when: install_mpi }
 
 - name: setup nfs clients
   sudo: yes
-  hosts: worker
-  vars_files:
-    - group_vars/components.yml
+  hosts: workers
   roles: 
     - { role: nfs_client, when: install_mpi }
 
 - name: setup mpi cluster
   sudo: yes
   hosts: all
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: openmpi, when: install_mpi }
 
 - name: install SBT
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: sbt, when: install_spark }
   any_errors_fatal: yes
@@ -92,8 +84,6 @@
 - name: install Scala
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: scala, when: install_spark }
   any_errors_fatal: yes
@@ -101,17 +91,13 @@
 - name: setup HDFS namenode
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: hdfs_namenode, when: install_spark or install_mapred or install_mesos or install_tachyon }
   any_errors_fatal: yes
 
 - name: setup HDFS datanodes
   sudo: yes
-  hosts: worker
-  vars_files:
-    - group_vars/components.yml
+  hosts: workers
   roles:
     - { role: hdfs_datanode, when: install_spark or install_mapred or install_mesos or install_tachyon }
   any_errors_fatal: yes
@@ -119,8 +105,6 @@
 - name: deploy standalone Spark
   sudo: yes
   hosts: all
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: spark_standalone, when: install_spark }
   any_errors_fatal: yes
@@ -128,8 +112,6 @@
 - name: install Mesos
   sudo: yes
   hosts: all
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: mesos, when: install_mesos }
   any_errors_fatal: yes
@@ -137,8 +119,6 @@
 - name: deploy Spark on Mesos
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: spark_mesos, when: install_mesos and install_spark }
   any_errors_fatal: yes
@@ -146,8 +126,6 @@
 - name: install mysql on Hive master
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: mysql_server, when: install_hive }
   any_errors_fatal: yes
@@ -155,8 +133,6 @@
 - name: install Hive
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: hive, when: install_hive }
   any_errors_fatal: yes
@@ -164,8 +140,6 @@
 - name: deploy Tachyon
   sudo: yes
   hosts: all
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: tachyon, when: install_tachyon }
   any_errors_fatal: yes
@@ -173,17 +147,13 @@
 - name: setup YARN resourcemanager
   sudo: yes
   hosts: master
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: yarn_resourcemanager, when: install_mapred }
   any_errors_fatal: yes
 
 - name: setup YARN nodemanagers
   sudo: yes
-  hosts: worker
-  vars_files:
-    - group_vars/components.yml
+  hosts: workers
   roles:
     - { role: yarn_nodemanager, when: install_mapred }
   any_errors_fatal: yes
@@ -191,8 +161,6 @@
 - name: install Cassandra
   sudo: yes
   hosts: all
-  vars_files:
-    - group_vars/components.yml
   roles:
     - { role: cassandra, when: install_cassandra }
 

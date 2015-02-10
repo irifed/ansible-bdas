@@ -1,2 +1,4 @@
 sshkeys
 ansible.log
+.idea
+atlassian-ide-plugin.xml

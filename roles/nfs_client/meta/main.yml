@@ -1,0 +1,6 @@
+---
+
+# nfs_client/meta/main.yml
+
+dependencies:
+ - { role: nfs_server }

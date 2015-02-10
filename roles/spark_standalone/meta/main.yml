@@ -1,3 +1,5 @@
 ---
 dependencies:
   - { role: java }
+  - { role: hadoop_common }
+  - { role: tachyon, when: install_tachyon}

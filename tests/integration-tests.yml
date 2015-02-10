@@ -1,7 +1,6 @@
 ---
 - hosts: master
-  vars_files:
-    - ../group_vars/components.yml
+
   vars:
      - test1: "spark-test.scala"
   tasks:

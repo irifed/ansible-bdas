@@ -21,3 +21,24 @@ tachyon_root: "/opt/tachyon"
 hdfsuser: "hdfs"
 
 spark_home: /opt/spark
+
+
+############################################
+# swift
+############################################
+swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
+swift_user: "{{lookup('env','SWIFT_USER')}}"
+swift_key: "{{lookup('env','SWIFT_KEY')}}"
+
+
+############################################
+# components
+############################################
+install_spark: true
+install_mesos: true
+install_mpi: false
+install_mapred: false
+install_hive: false
+install_tachyon: false
+install_cassandra: false
+
