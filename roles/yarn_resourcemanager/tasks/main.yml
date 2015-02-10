@@ -11,10 +11,6 @@
   tags:
     - install
 
-- include_vars: roles/hadoop_common/vars/main.yml
-  tags:
-    - configure
-
 - name: Copy the hadoop configuration files
   template: src=roles/yarn_resourcemanager/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
   with_items: 

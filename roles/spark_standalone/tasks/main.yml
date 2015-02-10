@@ -14,14 +14,6 @@
   tags:
     - install
 
-- include_vars: roles/hadoop_common/vars/main.yml
-  tags:
-    - configure
-
-- include_vars: roles/tachyon/vars/main.yml
-  tags:
-    - configure
-
 - name: Configure Spark to run in standalone deploy mode
   template: src=conf/spark-env.sh.j2 dest={{ spark_root }}/conf/spark-env.sh
   tags:

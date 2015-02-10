@@ -9,10 +9,6 @@
 #- name: Ensure portmap is running 
 #  action: service name=portmap state=started enabled=yes
 
-- include_vars: roles/nfs_server/vars/main.yml
-  tags:
-    - configure
-
 - name: Ensure {{nfsshare}} directory exists
   action: file path={{nfsshare}} state=directory
   tags:

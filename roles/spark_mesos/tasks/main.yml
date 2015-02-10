@@ -1,15 +1,4 @@
 ---
-- include_vars: roles/spark_standalone/vars/main.yml
-  tags:
-    - configure
-
-- include_vars: roles/hadoop_common/vars/main.yml
-  tags:
-    - configure
-
-- include_vars: roles/mesos/vars/main.yml
-  tags:
-    - configure
 
 - name: Create /tmp on HDFS
   shell: su - {{ hdfsuser }} -c "hadoop fs -mkdir /tmp"

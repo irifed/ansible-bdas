@@ -1,0 +1,7 @@
+---
+
+# ampcamp/meta/main.yml
+
+dependencies: 
+  - { role: hadoop_common }
+  - { role: spark_standalone }

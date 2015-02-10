@@ -4,14 +4,6 @@
   tags: 
     - install
 
-- include_vars: group_vars/swift.yml
-  tags:
-    - install
-
-- include_vars: roles/hadoop_common/vars/main.yml
-  tags:
-    - install
-
 - name: Download AMPCamp wikistats dataset from SoftLayer Object Store
   # do not change indentation in the long line below
   shell: >
@@ -62,7 +54,7 @@
   tags:
     - install
 
-- include_vars: roles/spark_standalone/vars/main.yml
+- include_vars: roles/spark_standalone/defaults/main.yml
   tags:
     - configure
 
