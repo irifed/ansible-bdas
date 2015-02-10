@@ -17,4 +17,4 @@ tag_role_worker
 
 
 [master:children]
-tag_role_worker
+tag_role_master
