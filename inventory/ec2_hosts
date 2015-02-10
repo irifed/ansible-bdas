@@ -2,6 +2,10 @@
 
 # ec2_hosts
 
+[tag_Name_modena:children]
+tag_role_worker
+tag_role_master
+
 [tag_role_worker]
 # filled by dynamic inventory ec2.py
 
