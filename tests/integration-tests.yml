@@ -22,7 +22,7 @@
 
       # include_vars destroys the precedence heirarchy
       - include_vars: ../group_vars/all
-      - include_vars: ../roles/spark_standalone/vars/main.yml
+      - include_vars: ../roles/spark_standalone/defaults/main.yml
 
       - name: run Spark test
         when: install_spark

@@ -36,9 +36,9 @@ swift_key: "{{lookup('env','SWIFT_KEY')}}"
 ############################################
 install_spark: true
 install_mesos: true
-install_mpi: false
-install_mapred: false
-install_hive: false
-install_tachyon: false
-install_cassandra: false
+install_mpi: true
+install_mapred: true
+install_hive: true
+install_tachyon: true
+install_cassandra: true
 

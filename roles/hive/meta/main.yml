@@ -2,3 +2,4 @@
 dependencies:
   - { role: java }
   - { role: mysql_server }
+  - { role: hadoop_common }

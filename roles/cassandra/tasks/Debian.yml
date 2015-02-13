@@ -39,7 +39,7 @@
   apt: name={{ item }} state=present
   with_items:
     - dsc20
-    - cassandra=2.0.11
+    - cassandra="{{cassandra_version}}"
     - opscenter
     - datastax-agent
   tags:

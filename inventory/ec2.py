@@ -146,9 +146,10 @@ class Ec2Inventory(object):
         self.index = {}
 
         # Read settings and parse CLI arguments
-        self.read_settings()
         self.parse_cli_args()
-
+        print "here1"
+        self.read_settings()
+        print "here2"
         # Cache
         if self.args.refresh_cache:
             self.do_api_calls_update_cache()
@@ -256,7 +257,9 @@ class Ec2Inventory(object):
         # Do we need to just include hosts that match a pattern?
         try:
             pattern_include = config.get('ec2', 'pattern_include')
-            if pattern_include and len(pattern_include) > 0:
+            if self.args.pattern_include:
+                pattern_include = re.compile(self.args.pattern_include)
+            elif pattern_include and len(pattern_include) > 0:
                 self.pattern_include = re.compile(pattern_include)
             else:
                 self.pattern_include = None
@@ -266,7 +269,9 @@ class Ec2Inventory(object):
         # Do we need to exclude hosts that match a pattern?
         try:
             pattern_exclude = config.get('ec2', 'pattern_exclude');
-            if pattern_exclude and len(pattern_exclude) > 0:
+            if self.args.pattern_exclude:
+                pattern_exclude = re.compile(self.args.pattern_exclude)
+            elif pattern_exclude and len(pattern_exclude) > 0:
                 self.pattern_exclude = re.compile(pattern_exclude)
             else:
                 self.pattern_exclude = None
@@ -275,8 +280,14 @@ class Ec2Inventory(object):
 
         # Instance filters (see boto and EC2 API docs)
         self.ec2_instance_filters = defaultdict(list)
-        if config.has_option('ec2', 'instance_filters'):
-            for x in config.get('ec2', 'instance_filters', '').split(','):
+        instance_filters = []
+        if self.args.instance_filters:
+            print self.args.instance_filters
+            instance_filters = self.args.instance_filters.split(',')
+        elif config.has_option('ec2', 'instance_filters'):
+            instance_filters = config.get('ec2', 'instance_filters', '').split(',')    
+        if instance_filters:
+            for x in instance_filters:
                 filter_key, filter_value = x.split('=')
                 self.ec2_instance_filters[filter_key].append(filter_value)
 
@@ -286,12 +297,17 @@ class Ec2Inventory(object):
         parser = argparse.ArgumentParser(description='Produce an Ansible Inventory file based on EC2')
         parser.add_argument('--list', action='store_true', default=True,
                            help='List instances (default: True)')
+        parser.add_argument('--pattern-include', action='store', default=None,
+                           help='Limit instances by hostname pattern to set of tags (over-rides ec2.ini')
+        parser.add_argument('--pattern-exclude', action='store', default=None,
+                           help='Limit instances by hostname pattern to exclude set of tags (over-rides ec2.ini)')
+        parser.add_argument('--instance-filters', action='store', default=None,
+                           help='Limit instances by tags to include a set of tags (over-rides ec2.ini)')
         parser.add_argument('--host', action='store',
                            help='Get all the variables about a specific instance')
         parser.add_argument('--refresh-cache', action='store_true', default=False,
                            help='Force refresh of cache by making API requests to EC2 (default: False - use cache files)')
         self.args = parser.parse_args()
-
 
     def do_api_calls_update_cache(self):
         ''' Do API calls to each region, and save data in cache files '''
