@@ -1,12 +1,44 @@
 # Variables for all hosts
 
-iface: eth1
+iface: eth0
+
 
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_' + iface]['ipv4']['address'] }}"
 master_fqdn: "{{ hostvars[groups['master'][0]]['ansible_fqdn'] }}"
+# A little indirect, but this is general enough to work across cloud providers if we put the line below in each providers deploy_vars
 master_hostname: "{{ hostvars[groups['master'][0]]['ansible_hostname'] }}"
+master_home: "{% if ansible_ssh_user == 'root' %}/root{% else %}/home/{{ansible_ssh_user}}{% endif %}"
 
 clusteruser: "hadoop"
 clusteruser_home: "/home/hadoop"
 
 bdas_container: "ampcamp-data"
+
+# spark and mesos roles depend on this
+tachyon_root: "/opt/tachyon"
+
+# integration test requires this
+hdfsuser: "hdfs"
+
+spark_home: /opt/spark
+
+
+############################################
+# swift
+############################################
+swift_api_url: "https://sjc01.objectstorage.softlayer.net/auth/v1.0/"
+swift_user: "{{lookup('env','SWIFT_USER')}}"
+swift_key: "{{lookup('env','SWIFT_KEY')}}"
+
+
+############################################
+# components
+############################################
+install_spark: true
+install_mesos: true
+install_mpi: true
+install_mapred: true
+install_hive: true
+install_tachyon: true
+install_cassandra: true
+

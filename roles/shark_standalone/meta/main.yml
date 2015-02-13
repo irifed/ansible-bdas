@@ -1,0 +1,10 @@
+---
+
+# shark_standalone/meta/main.yml
+
+dependencies:
+ - { role: hadoop_common }
+ - { role: spark_standalone }
+ - { role: hive }
+ - { role: mesos }
+

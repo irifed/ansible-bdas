@@ -1,3 +1,4 @@
 ---
 dependencies:
   - { role: mesos }
+  - { role: spark_standalone }

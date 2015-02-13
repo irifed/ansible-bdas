@@ -17,3 +17,5 @@ spark_worker_memory: 14g
 
 # only for spark 0.9.x
 # spark_mem: 14g 
+
+spark_standalone_default_cores: 1

@@ -1,0 +1,18 @@
+# generate_hosts_template
+
+# {{ansible_managed}}
+
+# carefull using groups.all.  If any hosts fail gather_facts, the loop will likely fail.
+{% for host in groups.all %}
+{{host}} ansible_ssh_host={{hostvars[host]['ansible_' + iface]['ipv4']['address']
+{% endfor %}
+
+[master]
+{% for host in groups[group_to_tag_map['master']] %}
+host
+{% endfor %}
+
+[workers]
+{% for host in groups[group_to_tag_map['worker']] %}
+host
+{% endfor %}

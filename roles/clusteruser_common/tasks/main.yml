@@ -15,7 +15,6 @@
   lineinfile: "dest=/etc/sudoers
   insertafter=EOF
   line='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
-  regexp='{{ clusteruser }} ALL=(ALL) NOPASSWD: ALL'
   state=present"
   tags:
     - install

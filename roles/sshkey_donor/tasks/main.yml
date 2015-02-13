@@ -10,13 +10,15 @@
     - configure
 
 - name: create tmp dir for ssh keys
-  local_action: command mkdir sshkeys
-  ignore_errors: yes
+  local_action: file dest=sshkeys state=directory
+  run_once: yes
+  sudo: no
   tags:
     - configure
 
 - name: fetch SSH key file from master
   fetch: src={{ clusteruser_home }}/.ssh/{{ item }} dest=sshkeys/{{ item }} flat=yes
+  run_once: yes
   with_items:
     - id_rsa
     - id_rsa.pub

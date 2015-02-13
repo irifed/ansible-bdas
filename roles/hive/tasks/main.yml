@@ -14,10 +14,6 @@
   tags:
     - install
 
-- include_vars: ../../mysql_server/vars/main.yml
-  tags:
-    - configure
-
 - name: create metastore database
   mysql_db: name=metastore state=present login_user=root login_password={{ mysql_root_password }}
   tags:

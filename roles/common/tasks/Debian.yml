@@ -1,6 +1,11 @@
 ---
+
+- name: debug
+  local_action: template src=hostvars_dump dest=/tmp/hostvars_dump
+  sudo: false
+
 - name: install some tools for convenience
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=300
   with_items:
     - vim
     - tmux

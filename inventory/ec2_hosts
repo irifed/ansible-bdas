@@ -1,0 +1,23 @@
+
+
+# ec2_hosts
+
+
+[tag_worker_1]
+# filled by dynamic inventory ec2.py
+
+[tag_master_1]
+# filled by dynamic inventory ec2.py
+
+[workers:children]
+tag_worker_1
+
+
+[master:children]
+tag_master_1
+
+[tag_seed_1]
+# dynamic
+
+[seeds:children]
+tag_seed_1

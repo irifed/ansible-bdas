@@ -2,7 +2,7 @@
 
 try {
   // do not forget to put this file to HDFS
-  val textFile = sc.textFile("/README.md")
+  val textFile = sc.textFile("/tmp/README.md")
   textFile.count()
 
   val linesWithSpark = textFile.filter(line => line.contains("Spark"))
