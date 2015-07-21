@@ -17,6 +17,7 @@
 
 - name: cleanup sshkeys
   local_action: command rm -rf sshkeys
+  sudo: false
   tags:
     - configure
   

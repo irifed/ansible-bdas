@@ -12,6 +12,7 @@
 - name: create tmp dir for ssh keys
   local_action: command mkdir sshkeys
   ignore_errors: yes
+  sudo: false
   tags:
     - configure
 
