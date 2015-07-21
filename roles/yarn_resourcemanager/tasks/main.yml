@@ -16,7 +16,7 @@
     - configure
 
 - name: Copy the hadoop configuration files
-  template: src=roles/yarn_resourcemanager/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
+  template: src=roles/hadoop_common/templates/conf/{{ item }}.j2 dest=/etc/hadoop/conf/{{ item }}
   with_items: 
     - mapred-site.xml
   notify: restart hadoop master services
