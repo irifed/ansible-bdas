@@ -1,13 +1,3 @@
-- name: Install pre-uploaded Oracle Java rpm from S3
-  yum: name=http://oracle-jre.s3.amazonaws.com/jre-7u71-linux-x64.rpm state=present
-  tags:
-    - install
-
-- name: Make sure correct java version selected
-  alternatives: name=java link=/usr/bin/java path=/usr/java/jre1.7.0_71/bin/java
-  tags:
-    - install
-
 - name: Install JNA
   yum: name=jna state=present
   tags:
