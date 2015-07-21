@@ -1,6 +1,6 @@
 ---
 - name: install some tools for convenience
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - vim
     - tmux
@@ -13,7 +13,7 @@
     - python-pycurl
   tags:
     - install
-
+  
 - name: populate /etc/hosts
   template: src=etc/hosts.j2 dest=/etc/hosts
   tags:
