@@ -18,6 +18,9 @@
   tags:
     - install
 
+- name: make sure "{{ mesos_install_prefix }}"/etc/mesos dir exists
+  file:  path={{ mesos_install_prefix }}/etc/mesos state=directory
+
 - name: configure cluster masters
   template: src=masters.j2 dest={{ mesos_install_prefix }}/etc/mesos/masters
   tags:

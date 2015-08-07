@@ -3,4 +3,5 @@
 
 - name: restart hadoop master services
   service: name=hadoop-yarn-resourcemanager state=restarted
+  ignore_errors: true
   # TODO history server, proxyserver
